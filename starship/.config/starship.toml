@@ -4,8 +4,10 @@
 format = """
 $directory\
 $git_branch\
+$git_commit\
 $git_status\
 $git_state\
+$git_metrics\
 $nodejs\
 $python\
 $rust\
@@ -30,10 +32,20 @@ read_only = " 🔒"
 format = "[$symbol$branch(:$remote_branch)]($style) "
 symbol = " "
 style = "bold purple"
-truncation_length = 20
+truncation_length = 25
 truncation_symbol = "…"
+always_show_remote = false
 
-# Git status - detailed for git-heavy workflow
+# Git commit - show current commit info
+[git_commit]
+commit_hash_length = 7
+format = '[\($hash$tag\)]($style) '
+style = "bold green"
+only_detached = false
+tag_symbol = " 🏷 "
+tag_disabled = false
+
+# Git status - comprehensive status information
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
 style = "bold red"
@@ -41,18 +53,36 @@ conflicted = "⚡${count}"
 ahead = "⇡${count}"
 behind = "⇣${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-up_to_date = ""
+up_to_date = "✓"
 untracked = "?${count}"
 stashed = "📦${count}"
 modified = "!${count}"
 staged = "+${count}"
 renamed = "»${count}"
 deleted = "✘${count}"
+typechanged = "T${count}"
+ignore_submodules = false
 
 # Git state - show rebase, merge, etc.
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\) '
 style = "bright-black"
+rebase = "REBASING"
+merge = "MERGING"
+revert = "REVERTING"
+cherry_pick = "CHERRY-PICKING"
+bisect = "BISECTING"
+am = "AM"
+am_or_rebase = "AM/REBASE"
+
+# Git metrics - show added/deleted lines
+[git_metrics]
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+added_style = "bold green"
+deleted_style = "bold red"
+only_nonzero_diffs = true
+ignore_submodules = false
+disabled = false
 
 # Node.js/TypeScript - enhanced detection
 [nodejs]
