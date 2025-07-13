@@ -1,34 +1,58 @@
 # dotfiles
 
-## Setup
+Personal dotfiles managed with GNU Stow for easy installation and management.
+
+## Prerequisites
+
+Install GNU Stow:
 
 ```bash
-ln -s ~/dotfiles/.zshrc ~/.zshrc
-ln -s ~/dotfiles/.p10k.zsh ~/.p10k.zsh
-ln -s ~/dotfiles/.gitconfig ~/.gitconfig
+brew install stow
 ```
 
-## Unlink
+## Available Configurations
+
+- **zsh** - Zsh shell configuration (`.zshrc`)
+- **wezterm** - WezTerm terminal emulator configuration (`.wezterm.lua`)
+- **starship** - Starship prompt configuration (`starship.toml`)
+- **git** - Git configuration (`.gitconfig`)
+
+## Installation
+
+Clone this repository:
 
 ```bash
-unlink ~/.zshrc
-unlink ~/.p10k.zsh
-unlink ~/.gitconfig
+git clone https://github.com/your-username/dotfiles.git ~/dotfiles
+cd ~/dotfiles
 ```
 
-## dotfiles with GitHub Codespaces
-
-`install.sh` installs zsh plugins, copies over `.zshrc` and `.p10k.zsh`, etc.
-
-Mark `install.sh` as executable: `git add install.sh --chmod=+x`
-
-See [link](https://burkeholland.github.io/posts/codespaces-dotfiles/) for more info
-
-## Brewfile
+Install specific configurations using Stow:
 
 ```bash
-# creating a Brewfile
-brew bundle dump --file=~/.dotfiles/Brewfile --force
-# installing a Brewfile
-brew bundle install --file=~/.dotfiles/Brewfile
+# Install individual configurations
+stow zsh
+stow wezterm
+stow starship
+stow git
+
+# Install all configurations at once
+stow */
 ```
+
+## Uninstalling
+
+Remove configurations using Stow's delete option:
+
+```bash
+# Remove specific configuration
+stow -D zsh
+
+# Remove all configurations
+stow -D */
+```
+
+## How it works
+
+GNU Stow creates symlinks from your home directory to the files in this repository. Each subdirectory represents a "package" that contains the dotfiles for a specific application, organized in the same structure as they would appear in your home directory.
+
+For example, running `stow wezterm` will create a symlink at `~/.wezterm.lua` pointing to `~/dotfiles/wezterm/.wezterm.lua`.
