@@ -30,13 +30,13 @@ Install specific configurations using Stow:
 
 ```bash
 # Install individual configurations
-stow zsh
-stow wezterm
-stow starship
-stow git
+stow zsh --target ~/
+stow wezterm --target ~/
+stow starship --target ~/
+stow git --target ~/
 
 # Install all configurations at once
-stow */
+stow */ --target ~/
 ```
 
 ## Uninstalling
@@ -45,10 +45,10 @@ Remove configurations using Stow's delete option:
 
 ```bash
 # Remove specific configuration
-stow -D zsh
+stow -D zsh --target ~/
 
 # Remove all configurations
-stow -D */
+stow -D */ --target ~/
 ```
 
 ## How it works
