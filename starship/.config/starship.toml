@@ -1,0 +1,139 @@
+# Starship Configuration - TypeScript, Python, Git, Docker, Rust & Go focused
+
+# Use custom format optimized for your workflow
+format = """
+$directory\
+$git_branch\
+$git_status\
+$git_state\
+$nodejs\
+$python\
+$rust\
+$golang\
+$docker_context\
+$package\
+$line_break\
+$character"""
+
+# Right side prompt for additional info
+right_format = """$cmd_duration"""
+
+# Directory configuration
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold cyan"
+read_only = " 🔒"
+
+# Git branch - enhanced for heavy git usage
+[git_branch]
+format = "[$symbol$branch(:$remote_branch)]($style) "
+symbol = " "
+style = "bold purple"
+truncation_length = 20
+truncation_symbol = "…"
+
+# Git status - detailed for git-heavy workflow
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "bold red"
+conflicted = "⚡${count}"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+up_to_date = ""
+untracked = "?${count}"
+stashed = "📦${count}"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✘${count}"
+
+# Git state - show rebase, merge, etc.
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
+
+# Node.js/TypeScript - enhanced detection
+[nodejs]
+format = "[$symbol($version )]($style)"
+symbol = " "
+style = "bold green"
+detect_extensions = ["js", "mjs", "cjs", "ts", "tsx", "json", "vue", "svelte"]
+detect_files = ["package.json", "tsconfig.json", ".nvmrc", "yarn.lock", "pnpm-lock.yaml"]
+
+# Python - enhanced with virtual env info
+[python]
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+symbol = " "
+style = "bold yellow"
+pyenv_version_name = true
+detect_extensions = ["py", "pyi", "pyc", "pyo", "pyw", "pyz"]
+detect_files = ["requirements.txt", "pyproject.toml", "Pipfile", "setup.py", "tox.ini", ".python-version"]
+
+# Rust
+[rust]
+format = "[$symbol($version )]($style)"
+symbol = " "
+style = "bold red"
+detect_extensions = ["rs"]
+detect_files = ["Cargo.toml"]
+
+# Go
+[golang]
+format = "[$symbol($version )]($style)"
+symbol = " "
+style = "bold cyan"
+detect_extensions = ["go"]
+detect_files = ["go.mod", "go.sum", "glide.yaml", "Gopkg.yml", "Gopkg.lock", ".go-version"]
+
+# Docker context
+[docker_context]
+format = "[$symbol$context]($style) "
+symbol = " "
+style = "bold blue"
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+detect_folders = [".devcontainer"]
+
+# Package version - useful for npm/pip/cargo projects
+[package]
+format = "[$symbol$version]($style) "
+symbol = "📦 "
+style = "bold magenta"
+display_private = false
+
+# Command duration - show for longer operations (common in git/build tasks)
+[cmd_duration]
+min_time = 1_000
+format = "[$duration]($style)"
+style = "bold yellow"
+show_milliseconds = true
+
+# Character prompt - enhanced for git operations
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
+# Disable modules we don't need
+[aws]
+disabled = true
+
+[hostname]
+disabled = true
+
+[username]
+disabled = true
+
+[time]
+disabled = true
+
+[battery]
+disabled = true
+
+[memory_usage]
+disabled = true
+
+[jobs]
+disabled = true

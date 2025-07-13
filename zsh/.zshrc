@@ -8,8 +8,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # Homebrew (Apple Silicon) in PATH
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Choose your theme
-ZSH_THEME="robbyrussell"
+# Use Starship prompt instead of Oh My Zsh themes
+ZSH_THEME=""
 
 
 # Essential plugins
@@ -23,6 +23,9 @@ plugins=(
 
 # Initialize Oh My Zsh
 source $ZSH/oh-my-zsh.sh
+
+# Initialize Starship prompt
+eval "$(starship init zsh)"
 
 ##### Convenience Enhancements #####
 
