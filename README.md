@@ -16,6 +16,7 @@ brew install stow
 - **wezterm** - WezTerm terminal emulator configuration (`.wezterm.lua`)
 - **starship** - Starship prompt configuration (`starship.toml`)
 - **git** - Git configuration (`.gitconfig`)
+- **vim** - Vim editor configuration (`.vimrc`)
 
 ## Installation
 
