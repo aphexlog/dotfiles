@@ -17,6 +17,7 @@ brew install stow
 - **starship** - Starship prompt configuration (`starship.toml`)
 - **git** - Git configuration (`.gitconfig`)
 - **vim** - Vim editor configuration (`.vimrc`)
+- **nav** - Code navigation utility with smooth workspace management
 
 ## Installation
 

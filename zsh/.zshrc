@@ -8,6 +8,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # Homebrew (Apple Silicon) in PATH
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# Add local bin to PATH for custom tools
+export PATH="$HOME/.local/bin:$PATH"
+
 # Use Starship prompt instead of Oh My Zsh themes
 ZSH_THEME=""
 
@@ -52,6 +55,13 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export GOBIN=$GOPATH/bin
 eval "$(mise activate zsh)"
+
+# Source additional zsh configurations
+if [[ -d "$HOME/.zshrc.d" ]]; then
+    for file in "$HOME/.zshrc.d"/*.zsh; do
+        [[ -r "$file" ]] && source "$file"
+    done
+fi
 
 # Q post-block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] \
