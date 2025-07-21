@@ -18,6 +18,7 @@ brew install stow
 - **git** - Git configuration (`.gitconfig`)
 - **vim** - Vim editor configuration (`.vimrc`)
 - **nvim** - Neovim configuration
+- **mcp** - MCP server for Amazon Q integration
 
 ## Installation
 
