@@ -22,6 +22,7 @@ plugins=(
   fast-syntax-highlighting
   zsh-autocomplete
   golang
+
 )
 
 # Initialize Oh My Zsh
