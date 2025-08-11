@@ -10,7 +10,7 @@ local dimmer = { brightness = 0.1 }
 -- For example, changing the color scheme:
 -- config.color_scheme = "Vacuous 2 (terminal.sexy)"
 config.color_scheme = "Catppuccin Mocha"
--- config.window_background_opacity = 0.50
+config.window_background_opacity = 0.85
 
 config.hide_tab_bar_if_only_one_tab = true
 config.font_size = 13.0
