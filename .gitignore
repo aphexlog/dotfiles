@@ -18,4 +18,14 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Python deps
 .venv
+
+# AWS environment
+mcp/.aws/cli
+mcp/.aws/sso
+mcp/.aws/config
+
+# Mise
+mise.toml
