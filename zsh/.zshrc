@@ -22,7 +22,11 @@ plugins=(
   fast-syntax-highlighting
   zsh-autocomplete
   golang
-
+  aws
+  node
+  git
+  docker
+  docker-compose
 )
 
 # Initialize Oh My Zsh
