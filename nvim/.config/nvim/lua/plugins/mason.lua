@@ -8,7 +8,7 @@ return {
   opts = {
     ensure_installed = {
       "stylua",
-      "shfmt",
+      "shfmt", 
       "bacon",
       "lua-language-server",
       "pyright",
@@ -17,8 +17,8 @@ return {
       "vls",
       "jq",
       "tailwindcss-language-server",
-      "biome",
       "gopls",
+      "eslint-lsp",
     },
   },
   ---@param opts MasonSettings | {ensure_installed: string[]}
