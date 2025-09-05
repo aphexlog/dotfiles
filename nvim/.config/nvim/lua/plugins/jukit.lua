@@ -3,12 +3,12 @@ return {
     "luk400/vim-jukit",
     ft = { "python", "json", "ipynb" },
     init = function()
-      -- core settings
-      vim.g.python3_host_prog = "/Users/aphexlog/.asdf/shims/python3"
+      -- Use system python3
+      vim.g.python3_host_prog = vim.fn.exepath("python3")
       vim.g.jukit_shell_cmd = "ipython3"
       vim.g._jukit_python_os_cmd = "python3"
-      -- vim.g.jukit_terminal = "nvimterm"
-      vim.g.jukit_terminal = "terminal"
+      -- Use nvimterm to avoid terminal issues
+      vim.g.jukit_terminal = "nvimterm"
       vim.g.jukit_auto_output_hist = 0
       vim.g.jukit_use_tcomment = 0
       -- disable defaults and prevent E121
