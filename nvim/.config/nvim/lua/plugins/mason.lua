@@ -9,12 +9,9 @@ return {
     ensure_installed = {
       "stylua",
       "shfmt", 
-      "bacon",
       "lua-language-server",
       "pyright",
-      "ruff",
       "terraform-ls",
-      "vls",
       "jq",
       "tailwindcss-language-server",
       "gopls",

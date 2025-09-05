@@ -29,3 +29,5 @@ mcp/.aws/config
 
 # Mise
 mise.toml
+.serena
+zsh/.zshrc.d/qa-buildingblocks.sh
