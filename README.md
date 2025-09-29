@@ -36,7 +36,7 @@ Install specific configurations using Stow:
 stow zsh --target ~/
 stow wezterm --target ~/
 stow starship --target ~/
-stow git --target ~/
+stow github --target ~/
 
 # Install all configurations at once
 stow */ --target ~/

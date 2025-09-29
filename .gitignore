@@ -31,3 +31,6 @@ mcp/.aws/config
 mise.toml
 .serena
 zsh/.zshrc.d/qa-buildingblocks.sh
+
+# Copilot
+zsh/.zshrc.d/github-mcp.zsh
