@@ -34,3 +34,6 @@ zsh/.zshrc.d/qa-buildingblocks.sh
 
 # Copilot
 zsh/.zshrc.d/github-mcp.zsh
+
+# Q
+.cli_bash_history
