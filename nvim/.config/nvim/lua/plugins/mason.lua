@@ -8,7 +8,7 @@ return {
   opts = {
     ensure_installed = {
       "stylua",
-      "shfmt", 
+      "shfmt",
       "lua-language-server",
       "pyright",
       "terraform-ls",
@@ -16,6 +16,7 @@ return {
       "tailwindcss-language-server",
       "gopls",
       "eslint-lsp",
+      "json-lsp", -- Added JSON LSP server
     },
   },
   ---@param opts MasonSettings | {ensure_installed: string[]}
@@ -40,5 +41,8 @@ return {
         end
       end
     end)
+
+    -- LSP setup for JSON
+    require("lspconfig").jsonls.setup({})
   end,
 }
