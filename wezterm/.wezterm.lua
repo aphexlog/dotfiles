@@ -22,7 +22,7 @@ config.leader = { key = "w", mods = "CTRL", timeout_milliseconds = 1000 }
 config.background = {
 	{
 		source = {
-			File = wezterm.home_dir .. "/space.jpg",
+			File = wezterm.home_dir .. "/christmas.png",
 		},
 		hsb = dimmer,
 		attachment = { Parallax = 0.1 },
