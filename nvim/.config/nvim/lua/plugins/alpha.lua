@@ -46,6 +46,7 @@ return {
       dashboard.button("r", "🧙  Recent Files", ":Telescope oldfiles <CR>"),
       dashboard.button("t", "🛸  Search Text", ":Telescope live_grep <CR>"),
       dashboard.button("q", "🎃  Quit", ":qa<CR>"),
+      dashboard.button("c", "⚙️  Config", ":Telescope find_files cwd=~/.config/nvim <CR>"),
     }
 
     -- Footer setup with a custom message
