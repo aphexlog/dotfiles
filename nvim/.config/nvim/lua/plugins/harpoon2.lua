@@ -7,10 +7,13 @@ return {
   },
   config = function()
     local harpoon = require("harpoon")
-    harpoon:setup()
-
-    -- Load the Harpoon extension for Telescope
-    require("telescope").load_extension("harpoon")
+    harpoon:setup({
+      settings = {
+        save_on_toggle = false,
+        sync_on_ui_close = true,
+        save_on_change = true,
+      }
+    })
   end,
   keys = {
     {
@@ -23,14 +26,16 @@ return {
     {
       "<C-e>",
       function()
-        require("telescope").extensions.harpoon.marks()
+        local harpoon = require("harpoon")
+        harpoon.ui:toggle_quick_menu(harpoon:list())
       end,
       desc = "Harpoon Quick Menu",
     },
     {
       "<leader>th",
       function()
-        require("telescope").extensions.harpoon.marks()
+        local harpoon = require("harpoon")
+        harpoon.ui:toggle_quick_menu(harpoon:list())
       end,
       desc = "Harpooned files",
     },
@@ -56,11 +61,11 @@ return {
       desc = "Harpoon to file 3",
     },
     {
-      "<leader>4",
+      "<leader>hd",
       function()
-        require("harpoon"):list():select(4)
+        require("harpoon"):list():remove()
       end,
-      desc = "Harpoon to file 4",
+      desc = "Remove current file from Harpoon",
     },
   },
 }
