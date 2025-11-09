@@ -54,6 +54,7 @@ alias "tm"="tmux"
 alias "vi"="nvim"
 alias "vim"="nvim"
 alias "ll"="ls -la"
+alias "cpc"="copilot"
 
 # GOLANG
 export GOPATH=$HOME/go
