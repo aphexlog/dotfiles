@@ -22,3 +22,21 @@ map("n", "<C-l>", ":wincmd l<CR>", { noremap = true, silent = true })
 -- shirft + Ctrl + h/l to move bwtwn buffers
 map("n", "<S-h>", ":bprevious<CR>", { noremap = true, silent = true })
 map("n", "<S-l>", ":bnext<CR>", { noremap = true, silent = true })
+
+-- Vim Debug keymaps (debugging Neovim itself)
+map("n", "<leader>d", "Vim Debug", { noremap = true, silent = true }) -- Header
+map("n", "<leader>dm", ":messages<CR>", { desc = "Messages" })
+map("n", "<leader>dh", ":checkhealth<CR>", { desc = "Health Check" })
+map("n", "<leader>dl", ":Lazy<CR>", { desc = "Lazy" })
+map("n", "<leader>di", ":LspInfo<CR>", { desc = "LSP Info" })
+map("n", "<leader>dr", function()
+  vim.cmd("LspRestart")
+  vim.notify("LSP servers restarted")
+end, { desc = "LSP Restart" })
+
+-- Code Debug keymaps (debugging your code)
+map("n", "<leader>x", "Code Debug", { noremap = true, silent = true }) -- Header
+map("n", "<leader>xd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+map("n", "<leader>xq", vim.diagnostic.setloclist, { desc = "Quickfix Diagnostics" })
+map("n", "<leader>xn", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
+map("n", "<leader>xp", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic" })
