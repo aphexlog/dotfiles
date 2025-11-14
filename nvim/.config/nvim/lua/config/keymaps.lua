@@ -23,6 +23,11 @@ map("n", "<C-l>", ":wincmd l<CR>", { noremap = true, silent = true })
 map("n", "<S-h>", ":bprevious<CR>", { noremap = true, silent = true })
 map("n", "<S-l>", ":bnext<CR>", { noremap = true, silent = true })
 
+-- create split windows
+map("n", "<leader>wv", ":vsplit<CR>", { noremap = true, silent = true })
+map("n", "<leader>wh", ":split<CR>", { noremap = true, silent = true })
+map("n", "<leader>wx", ":close<CR>", { noremap = true, silent = true }) -- close current split window
+
 -- Vim Debug keymaps (debugging Neovim itself)
 map("n", "<leader>d", "Vim Debug", { noremap = true, silent = true }) -- Header
 map("n", "<leader>dm", ":messages<CR>", { desc = "Messages" })
