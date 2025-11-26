@@ -1,7 +1,3 @@
-# Q pre-block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] \
-  && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
-
 # Path to your Oh My Zsh installation
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -69,6 +65,3 @@ if [[ -d "$HOME/.zshrc.d" ]]; then
     done
 fi
 
-# Q post-block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] \
-  && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
