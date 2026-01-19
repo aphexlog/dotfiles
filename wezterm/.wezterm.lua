@@ -38,6 +38,18 @@ config.keys = {
 			args = { "top" },
 		}),
 	},
+	-- Toggle fullscreen
+	{
+		key = "f",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.ToggleFullScreen,
+	},
+	-- Toggle native macOS fullscreen
+	{
+		key = "f",
+		mods = "CTRL|CMD",
+		action = wezterm.action.ToggleFullScreen,
+	},
 }
 
 -- and finally, return the configuration to wezterm

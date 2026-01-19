@@ -20,7 +20,9 @@
       },
       "disabled": false,
       "autoApprove": [],
-      "tools": []
+      "tools": [
+        "*"
+      ]
     },
     "serena": {
       "type": "local",
@@ -36,7 +38,9 @@
       "env": {},
       "disabled": false,
       "autoApprove": [],
-      "tools": []
+      "tools": [
+        "*"
+      ]
     },
     "playwright": {
       "type": "local",
@@ -45,7 +49,9 @@
         "@playwright/mcp@latest"
       ],
       "env": {},
-      "tools": []
+      "tools": [
+        "*"
+      ]
     },
     "godot": {
       "type": "local",
@@ -74,7 +80,21 @@
         "get_uid",
         "update_project_uids"
       ],
-      "tools": []
+      "tools": [
+        "*"
+      ]
+    },
+    "ai-humanizer": {
+      "type": "local",
+      "command": "npx",
+      "args": [
+        "-y",
+        "ai-humanizer-mcp-server"
+      ],
+      "env": {},
+      "tools": [
+        "*"
+      ]
     }
   }
 }
