@@ -74,12 +74,12 @@
     "context": "Terminal",
     "bindings": {
       "ctrl-/": "workspace::ToggleBottomDock",
-      "ctrl-o": "workspace::NewTerminal",
-      "ctrl-n": "pane::ActivateNextItem",
-      "ctrl-p": "pane::ActivatePreviousItem",
-      "ctrl-b": "pane::CloseItemsToTheLeft",
-      "ctrl-i": "pane::CloseItemsToTheRight",
-      "ctrl-q": "pane::CloseActiveItem",
+      "ctrl-shift-n": "workspace::NewTerminal",
+      "ctrl-shift-b": "pane::CloseItemsToTheLeft",
+      "ctrl-shift-i": "pane::CloseItemsToTheRight",
+      "ctrl-shift-x": "pane::CloseActiveItem",
+      "ctrl-shift-h": "pane::ActivatePreviousItem",
+      "ctrl-shift-l": "pane::ActivateNextItem",
       // No leader (space) bindings in terminal
     },
   },
