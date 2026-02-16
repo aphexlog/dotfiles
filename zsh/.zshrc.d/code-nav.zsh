@@ -1,14 +1,5 @@
 # Simple Code Navigation Aliases
 
-# Enhanced navigation - c for Code directory, c -- project for specific project
-c() {
-    if [[ "$1" == "--" && -n "$2" ]]; then
-        cd ~/Code/$2 && pwd && ls
-    else
-        cd ~/Code && ls
-    fi
-}
-
 # Quick project listing
 alias projects='ls ~/Code'
 
