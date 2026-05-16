@@ -16,7 +16,7 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
   fast-syntax-highlighting
-  zsh-autocomplete
+  # zsh-autocomplete
   golang
   aws
   node
@@ -70,3 +70,6 @@ fpath=(/Users/aphexlog/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+
+# Initialize inshellisense
+eval "$(is init zsh)"
