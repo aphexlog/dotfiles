@@ -1,13 +1,34 @@
+##############################################################################
+# Git Configuration
+##############################################################################
+
 [user]
 	name = Aaron West
 	email = aphexlog@github.com
+
 [github]
 	user = aphexlog
+
+##############################################################################
+# UI & Display
+##############################################################################
+
 [pager]
+	# Disable pager for branch commands (easier to read in terminal)
 	branch = false
-[pull]
-	ff = true
+
+##############################################################################
+# Workflow
+##############################################################################
+
 [init]
+	# Use 'main' as default branch name
 	defaultBranch = main
+
+[pull]
+	# Fast-forward only when pulling
+	ff = true
+
 [push]
+	# Automatically set up remote tracking
 	autoSetupRemote = true

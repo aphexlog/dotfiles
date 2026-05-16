@@ -1,17 +1,23 @@
-# Path to your Oh My Zsh installation
-export ZSH="$HOME/.oh-my-zsh"
+##############################################################################
+# Core
+##############################################################################
 
-# Homebrew (Apple Silicon) in PATH
+export ZSH="$HOME/.oh-my-zsh"
+export TERM=xterm-256color
+
+# Homebrew (Apple Silicon)
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Add local bin to PATH for custom tools
+# Local binaries
 export PATH="$HOME/.local/bin:$PATH"
 
-# Use Starship prompt instead of Oh My Zsh themes
+# Use Starship instead of an Oh My Zsh theme
 ZSH_THEME=""
 
+##############################################################################
+# Plugins
+##############################################################################
 
-# Essential plugins
 plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -25,51 +31,59 @@ plugins=(
   docker-compose
 )
 
-# Initialize Oh My Zsh
 source $ZSH/oh-my-zsh.sh
-
-# Initialize Starship prompt
 eval "$(starship init zsh)"
 
-##### Convenience Enhancements #####
+##############################################################################
+# Completion / UX
+##############################################################################
 
-# Case-insensitive globbing & matching
 setopt nocaseglob nocasematch
-
-# Case-insensitive tab-completion
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 
-
-# Fuzzy file/directory finder (if installed)
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Your preferred editor
+# Docker Desktop completions
+fpath=(/Users/aphexlog/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+
+# Carapace completions (command/flag descriptions)
+if command -v carapace >/dev/null 2>&1; then
+  export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
+  source <(carapace _carapace)
+fi
+
+# fzf-tab completion menu
+if [[ -f /opt/homebrew/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh ]]; then
+  source /opt/homebrew/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh
+fi
+
+##############################################################################
+# Environment
+##############################################################################
+
 export EDITOR='nvim'
-
-# Alieses
-alias "tm"="tmux"
-alias "vi"="nvim"
-alias "vim"="nvim"
-alias "ll"="ls -la"
-alias "cpc"="copilot"
-
-# GOLANG
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export GOBIN=$GOPATH/bin
 eval "$(mise activate zsh)"
 
-# Source additional zsh configurations
+##############################################################################
+# Aliases
+##############################################################################
+
+alias tm="tmux"
+alias vi="nvim"
+alias vim="nvim"
+alias ll="ls -la"
+alias cpc="copilot --silent"
+
+##############################################################################
+# Local Overrides
+##############################################################################
+
 if [[ -d "$HOME/.zshrc.d" ]]; then
-    for file in "$HOME/.zshrc.d"/*.zsh; do
-        [[ -r "$file" ]] && source "$file"
-    done
+  for file in "$HOME/.zshrc.d"/*.zsh; do
+    [[ -r "$file" ]] && source "$file"
+  done
 fi
-
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/aphexlog/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
-
-# Initialize inshellisense
-eval "$(is init zsh)"

@@ -53,43 +53,24 @@
         "*"
       ]
     },
-    "godot": {
-      "type": "local",
-      "command": "npx",
-      "args": [
-        "-y",
-        "@apptronic/godot-mcp"
-      ],
-      "env": {
-        "DEBUG": "true"
-      },
-      "disabled": false,
-      "autoApprove": [
-        "launch_editor",
-        "run_project",
-        "get_debug_output",
-        "stop_project",
-        "get_godot_version",
-        "list_projects",
-        "get_project_info",
-        "create_scene",
-        "add_node",
-        "load_sprite",
-        "export_mesh_library",
-        "save_scene",
-        "get_uid",
-        "update_project_uids"
-      ],
-      "tools": [
-        "*"
-      ]
-    },
     "ai-humanizer": {
       "type": "local",
       "command": "npx",
       "args": [
         "-y",
         "ai-humanizer-mcp-server"
+      ],
+      "env": {},
+      "tools": [
+        "*"
+      ]
+    },
+    "spec-kit": {
+      "type": "local",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anyicode/spec-kit-mcp@latest"
       ],
       "env": {},
       "tools": [

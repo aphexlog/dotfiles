@@ -4,11 +4,37 @@ Personal dotfiles managed with GNU Stow for easy installation and management.
 
 ## Prerequisites
 
+### Required
 Install GNU Stow:
 
 ```bash
 brew install stow
 ```
+
+### Zsh Dependencies
+The zsh configuration requires these tools for full functionality:
+
+```bash
+# Core completions (provides flag descriptions for 600+ commands)
+brew install carapace
+
+# Fuzzy completion menu
+brew install fzf-tab
+
+# Starship prompt
+brew install starship
+
+# Oh-My-Zsh (if not already installed)
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Oh-My-Zsh plugins
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
+git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autocomplete
+```
+
+The `.zshrc` will show warnings for any missing tools when you open a new shell.
 
 ## Available Configurations
 

@@ -1,18 +1,52 @@
 {
+  // ========================================================================
+  // Zed Editor Configuration
+  // ========================================================================
+
+  // ========================================================================
+  // Agent / AI Settings
+  // ========================================================================
   "agent": {
     "default_model": { "provider": "copilot_chat", "model": "gpt-4.1" },
     "favorite_models": [],
     "model_parameters": []
   },
+
+  // ========================================================================
+  // Privacy
+  // ========================================================================
   "telemetry": { "diagnostics": false },
-  "tab_bar": { "show": true },
-  "base_keymap": "VSCode",
-  "vim_mode": true,
+
+  // ========================================================================
+  // Appearance
+  // ========================================================================
+  "theme": "Catppuccin Mocha - No Italics",
   "ui_font_size": 16,
   "buffer_font_size": 14,
   "buffer_line_height": { "custom": 1.3 },
+
+  // ========================================================================
+  // Editor Behavior
+  // ========================================================================
+  "base_keymap": "VSCode",
+  "vim_mode": true,
   "current_line_highlight": "line",
-  "theme": "Catppuccin Mocha - No Italics",
+  
+  // Tabs
+  "tab_bar": { "show": true },
+  "preview_tabs": {
+    "enabled": true,
+    "enable_preview_from_file_finder": false,
+    "enable_keep_preview_on_code_navigation": false
+  },
+
+  // Layout
+  "centered_layout": { 
+    "left_padding": 0.1, 
+    "right_padding": 0.1 
+  },
+
+  // Scrollbar
   "scrollbar": {
     "show": "never",
     "cursors": false,
@@ -21,16 +55,18 @@
     "selected_symbol": true,
     "diagnostics": "all"
   },
-  "preview_tabs": {
-    "enabled": true,
-    "enable_preview_from_file_finder": false,
-    "enable_keep_preview_on_code_navigation": false
-  },
-  "centered_layout": { "left_padding": 0.1, "right_padding": 0.1 },
+
+  // ========================================================================
+  // Git Integration
+  // ========================================================================
   "git": {
     "git_gutter": "tracked_files",
     "inline_blame": { "enabled": false }
   },
+
+  // ========================================================================
+  // Jupyter Integration
+  // ========================================================================
   "jupyter": {
     "kernel_selections": {
       "python": "conda-env",
@@ -39,8 +75,15 @@
       "r": "ark"
     }
   },
+
+  // ========================================================================
+  // Language-Specific Settings
+  // ========================================================================
   "languages": {
-    "Python": { "language_servers": ["pylsp", "ruff"], "format_on_save": "on" },
+    "Python": { 
+      "language_servers": ["pylsp", "ruff"], 
+      "format_on_save": "on" 
+    },
     "typescript": {
       "language_servers": ["tsserver", "prettier", "!eslint"],
       "format_on_save": "on"
@@ -62,6 +105,10 @@
       "format_on_save": "on"
     }
   },
+
+  // ========================================================================
+  // LSP Configuration
+  // ========================================================================
   "lsp": {
     "pylsp": {
       "settings": {
@@ -69,6 +116,8 @@
         "pylsp.plugins.jedi_completion": { "include_params": true }
       }
     },
-    "ruff": { "initialization_options": { "settings": {} } }
+    "ruff": { 
+      "initialization_options": { "settings": {} } 
+    }
   }
 }

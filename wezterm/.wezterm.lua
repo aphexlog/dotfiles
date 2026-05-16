@@ -1,24 +1,27 @@
--- Pull in the wezterm API
-local wezterm = require("wezterm")
+##############################################################################
+# WezTerm Configuration
+##############################################################################
 
--- This will hold the configuration.
+local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
--- This is going to dim the brightness of the terminal
-local dimmer = { brightness = 0.1 }
+##############################################################################
+# Appearance
+##############################################################################
 
--- For example, changing the color scheme:
--- config.color_scheme = "Vacuous 2 (terminal.sexy)"
+-- Color scheme
 config.color_scheme = "Catppuccin Mocha"
 config.window_background_opacity = 0.85
 
-config.hide_tab_bar_if_only_one_tab = true
-config.font_size = 13.0
+-- Font
 config.font = wezterm.font("JetBrains Mono")
+config.font_size = 13.0
 
-config.leader = { key = "w", mods = "CTRL", timeout_milliseconds = 1000 }
--- Background image configuration
+-- Tabs
+config.hide_tab_bar_if_only_one_tab = true
 
+-- Background image
+local dimmer = { brightness = 0.1 }
 config.background = {
 	{
 		source = {
@@ -29,8 +32,22 @@ config.background = {
 	},
 }
 
+##############################################################################
+# Terminal Settings
+##############################################################################
+
+-- TERM variable (supports 256 colors and proper rendering)
+config.term = "wezterm"
+
+##############################################################################
+# Key Bindings
+##############################################################################
+
+-- Leader key: Ctrl+w (1 second timeout)
+config.leader = { key = "w", mods = "CTRL", timeout_milliseconds = 1000 }
+
 config.keys = {
-	-- This will create a new split and run the `top` program inside it
+	-- Split and run top (Leader+t)
 	{
 		key = "t",
 		mods = "LEADER",
@@ -38,13 +55,15 @@ config.keys = {
 			args = { "top" },
 		}),
 	},
-	-- Toggle fullscreen
+	
+	-- Toggle fullscreen (Ctrl+Shift+f)
 	{
 		key = "f",
 		mods = "CTRL|SHIFT",
 		action = wezterm.action.ToggleFullScreen,
 	},
-	-- Toggle native macOS fullscreen
+	
+	-- Toggle native macOS fullscreen (Ctrl+Cmd+f)
 	{
 		key = "f",
 		mods = "CTRL|CMD",
@@ -52,5 +71,4 @@ config.keys = {
 	},
 }
 
--- and finally, return the configuration to wezterm
 return config
