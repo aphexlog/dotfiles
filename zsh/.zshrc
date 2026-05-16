@@ -77,6 +77,7 @@ alias vi="nvim"
 alias vim="nvim"
 alias ll="ls -la"
 alias cpc="copilot --silent"
+alias q="opencode"
 
 ##############################################################################
 # Local Overrides
