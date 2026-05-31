@@ -10,8 +10,8 @@ local config = wezterm.config_builder()
 -- ##############################################################################
 
 -- Color scheme
-config.color_scheme = "Catppuccin Mocha"
-config.window_background_opacity = 0.85
+config.color_scheme = "Abernathy"
+config.window_background_opacity = 0.95
 
 -- Font
 config.font = wezterm.font("JetBrains Mono")
@@ -22,15 +22,15 @@ config.hide_tab_bar_if_only_one_tab = true
 
 -- Background image
 local dimmer = { brightness = 0.1 }
-config.background = {
-	{
-		source = {
-			File = wezterm.home_dir .. "/pirates.png",
-		},
-		hsb = dimmer,
-		attachment = { Parallax = 0.1 },
-	},
-}
+-- config.background = {
+-- 	{
+-- 		source = {
+-- 			File = wezterm.home_dir .. "/pirates.png",
+-- 		},
+-- 		hsb = dimmer,
+-- 		attachment = { Parallax = 0.1 },
+-- 	},
+-- }
 
 -- ##############################################################################
 -- # Terminal Settings
@@ -55,14 +55,14 @@ config.keys = {
 			args = { "top" },
 		}),
 	},
-	
+
 	-- Toggle fullscreen (Ctrl+Shift+f)
 	{
 		key = "f",
 		mods = "CTRL|SHIFT",
 		action = wezterm.action.ToggleFullScreen,
 	},
-	
+
 	-- Toggle native macOS fullscreen (Ctrl+Cmd+f)
 	{
 		key = "f",
