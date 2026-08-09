@@ -10,6 +10,7 @@ return {
   opts = {
     picker = "snacks",
     enable_builtin = true,
+    default_remote = { "origin" },
   },
   keys = {
     { "<leader>oi", "<cmd>Octo issue list<cr>", desc = "List GitHub Issues" },
