@@ -1,7 +1,7 @@
 local map = LazyVim.safe_keymap_set
 
 -- Telescope keymaps
-map("n", "<leader>t", "Telescope", { noremap = true, silent = true }) -- This just provides a readable header
+map("n", "<leader>t", "<Nop>", { desc = "Telescope" })
 map("n", "<leader>tt", ":TodoTelescope<CR>", { noremap = true, silent = true })
 map("n", "<leader>tf", ":Telescope find_files<CR>", { noremap = true, silent = true })
 map("n", "<leader>tg", ":Telescope live_grep<CR>", { noremap = true, silent = true })

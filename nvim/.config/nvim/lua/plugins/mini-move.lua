@@ -1,6 +1,7 @@
 return {
   "nvim-mini/mini.move",
   version = "*",
+  event = "VeryLazy",
   config = function()
     require("mini.move").setup({
       -- Module mappings. Use `''` (empty string) to disable one.
