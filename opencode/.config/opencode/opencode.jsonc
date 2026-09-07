@@ -3,6 +3,13 @@
   "instructions": [
     "~/.config/opencode/instructions/commit-style.md"
   ],
+  // Load repo-managed skills and skills installed by the shared skills CLI.
+  "skills": {
+    "paths": [
+      "~/.config/opencode/skills",
+      "~/.agents/skills"
+    ]
+  },
   "mcp": {
     "context7": {
       "type": "remote",
