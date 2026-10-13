@@ -37,5 +37,3 @@ end, { desc = "LSP Restart" })
 map("n", "<leader>x", "Code Debug", { noremap = true, silent = true }) -- Header
 map("n", "<leader>xd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 map("n", "<leader>xq", vim.diagnostic.setloclist, { desc = "Quickfix Diagnostics" })
-map("n", "<leader>xn", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
-map("n", "<leader>xp", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic" })
