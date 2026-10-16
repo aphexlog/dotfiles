@@ -1,11 +1,19 @@
-# Simple Code Navigation Aliases
+##############################################################################
+# Project Navigation
+##############################################################################
 
 # Quick project listing
 alias projects='ls ~/Code'
 
-# Quick project creation
+# Create a project safely without overwriting an existing README.
 mkp() {
-    mkdir -p ~/Code/$1 && cd ~/Code/$1
-    echo "# $1" > README.md
-    git init . 2>/dev/null
+  if (( $# != 1 )) || [[ -z "$1" || "$1" == */* || "$1" == . || "$1" == .. ]]; then
+    print -u2 -- 'Usage: mkp <project-name> (a single directory name)'
+    return 1
+  fi
+
+  local project="$HOME/Code/$1"
+  mkdir -p -- "$project" && builtin cd -- "$project" || return
+  [[ -e README.md ]] || printf '# %s\n' "$1" > README.md
+  command git init .
 }

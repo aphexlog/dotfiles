@@ -18,6 +18,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+*.bak.*
 
 # Python deps
 .venv

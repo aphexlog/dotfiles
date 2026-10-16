@@ -1,0 +1,9 @@
+# Model payloads and runtime builds stay machine-local, never in Git.
+/.local/share/local-llm/models/
+/.local/share/local-llm/runtime/
+
+# Generated diagnostics and Python caches are not configuration.
+/.local/share/local-llm/__pycache__/
+/.local/share/local-llm/*-results.json
+/.local/share/local-llm/model-metadata.json
+/.local/share/local-llm/*.jsonl

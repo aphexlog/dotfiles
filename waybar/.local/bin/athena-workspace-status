@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+
+##############################################################################
+# Focused Workspace Indicator
+##############################################################################
+
+# Emit Waybar's active class for the globally focused desktop.
+workspace="${1:?workspace number required}"
+hyprctl activeworkspace -j | jq -c --arg id "$workspace" '
+  {text: $id, tooltip: ("Desktop " + $id),
+   class: (if (.id | tostring) == $id then "active" else "inactive" end)}
+'

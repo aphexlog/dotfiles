@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="${HOME}/.local/share/local-llm"
+RUNTIME="${ROOT}/runtime/llama-b11669/llama-b11669"
+MODEL="${ROOT}/models/IQ3_S/Qwen3.8-Flash-Next-GSQ-RCO-abliterated-IQ3_S-00001-of-00002.gguf"
+
+# Keep the large n-gram lookup table on the SSD; fit the other weights to the GPU
+# with a desktop-friendly memory margin and use CPU offload where necessary.
+exec "${RUNTIME}/llama-server" \
+  --model "${MODEL}" \
+  --alias qwen3.8-flash-next-abliterated \
+  --device Vulkan0 \
+  --fit on \
+  --fit-target 4096 \
+  --load-mode mmap \
+  --lazy-mode on \
+  --ctx-size "${LOCAL_LLM_CONTEXT:-65536}" \
+  --parallel 1 \
+  --batch-size 1024 \
+  --ubatch-size 256 \
+  --threads 12 \
+  --threads-batch 12 \
+  --flash-attn on \
+  --cache-type-k f16 \
+  --cache-type-v f16 \
+  --cache-ram 2048 \
+  --temp 0.6 \
+  --top-k 20 \
+  --top-p 0.95 \
+  --min-p 0 \
+  --repeat-penalty 1 \
+  --jinja \
+  --reasoning-effort medium \
+  --reasoning-budget 2048 \
+  --reasoning-format deepseek \
+  --host 127.0.0.1 \
+  --port 8080 \
+  --cors-origins localhost \
+  --no-ui \
+  --sleep-idle-seconds 900 \
+  "$@"

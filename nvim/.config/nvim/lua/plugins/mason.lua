@@ -6,7 +6,8 @@ return {
   build = ":MasonUpdate",
   opts_extend = { "ensure_installed" },
   opts = {
-    ensure_installed = {
+    -- Go tools require a Go installation; the other tools are self-contained.
+    ensure_installed = vim.list_extend({
       "stylua",
       "shfmt",
       "lua-language-server",
@@ -14,9 +15,8 @@ return {
       "terraform-ls",
       "jq",
       "tailwindcss-language-server",
-      "gopls",
       "eslint-lsp",
       "json-lsp", -- Added JSON LSP server
-    },
+    }, vim.fn.executable("go") == 1 and { "gopls" } or {}),
   },
 }

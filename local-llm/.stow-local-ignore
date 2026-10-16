@@ -1,0 +1,8 @@
+# Keep package control files and machine-generated data out of the live links.
+(^|/)\.gitignore$
+(^|/)\.stow-local-ignore$
+(^|/)__pycache__(/|$)
+^/\.local/share/local-llm/(models|runtime)(/|$)
+^/\.local/share/local-llm/.*-results\.json$
+^/\.local/share/local-llm/model-metadata\.json$
+^/\.local/share/local-llm/.*\.jsonl$

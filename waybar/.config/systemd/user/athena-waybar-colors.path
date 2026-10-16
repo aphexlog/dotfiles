@@ -1,0 +1,10 @@
+[Unit]
+Description=Watch Omarchy wallpaper and theme changes for Athena colors
+PartOf=graphical-session.target
+
+[Path]
+PathChanged=%h/.local/state/omarchy/current
+Unit=athena-waybar-colors.service
+
+[Install]
+WantedBy=graphical-session.target

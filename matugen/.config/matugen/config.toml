@@ -1,0 +1,7 @@
+# Wallpaper-derived colors for Waybar only. Omarchy continues theming other apps.
+[config]
+reload_apps = false
+
+[templates.athena-waybar]
+input_path = "~/.config/matugen/templates/athena-waybar.css"
+output_path = "~/.cache/athena-waybar/colors.css"

@@ -1,0 +1,87 @@
+#!/bin/bash
+set -euo pipefail
+
+##############################################################################
+# Paths and Bar Lifecycle
+##############################################################################
+
+config="$HOME/.config"
+cache="$HOME/.cache/athena-waybar"
+state="$HOME/.local/state/athena-waybar"
+stock_flag="$HOME/.local/state/omarchy/toggles/bar-off"
+unit=athena-waybar.service
+
+generate_colors() {
+  mkdir -p "$cache"
+  local wallpaper="$HOME/.local/state/omarchy/current/background"
+  # Explicit source selection prevents Matugen 4 from opening an interactive menu.
+  matugen --config "$config/matugen/config.toml" --mode dark --source-color-index 0 \
+    image "$wallpaper"
+  printf '@import url("%s/colors.css");\n@import url("%s/waybar/style.css");\n' \
+    "$cache" "$config" > "$cache/style.css"
+}
+
+case "${1:-status}" in
+  run)
+    exec waybar --config "$config/waybar/config.jsonc" --style "$cache/style.css"
+    ;;
+  colors)
+    generate_colors
+    # Signal only this service's Waybar, never other users' bars or the startup
+    # shell before it has exec'd Waybar. CSS/config reload preserves the service.
+    if [[ "${2:-}" != --no-reload ]]; then
+      pid=$(systemctl --user show "$unit" --property=MainPID --value)
+      if [[ "$pid" != 0 && "$(readlink "/proc/$pid/exe" 2>/dev/null || true)" == /usr/bin/waybar ]]; then
+        systemctl --user kill --kill-whom=main --signal=SIGUSR2 "$unit"
+      fi
+    fi
+    ;;
+  hide-stock)
+    mkdir -p "$state"
+    if [[ -e "$stock_flag" ]]; then
+      touch "$state/stock-was-hidden"
+    else
+      rm -f "$state/stock-was-hidden"
+      omarchy toggle bar
+    fi
+    ;;
+  restore-stock)
+    if [[ ! -e "$state/stock-was-hidden" && -e "$stock_flag" ]]; then
+      omarchy toggle bar
+    fi
+    ;;
+  toggle)
+    if systemctl --user is-active --quiet "$unit"; then
+      systemctl --user kill --kill-whom=main --signal=SIGUSR1 "$unit"
+    else
+      omarchy toggle bar
+    fi
+    ;;
+  enable)
+    systemctl --user enable --now "$unit" athena-waybar-colors.path
+    ;;
+  stock)
+    systemctl --user disable --now athena-waybar-colors.path "$unit"
+    ;;
+  idle-status)
+    if [[ -f "$HOME/.local/state/omarchy/indicators/stay-awake" ]]; then
+      printf '{"text":"󰌵","class":"enabled","tooltip":"Staying awake · Click to allow idle lock and screensaver"}\n'
+    else
+      printf '{"text":"󰌶","class":"disabled","tooltip":"Idle lock and screensaver enabled · Click to stay awake"}\n'
+    fi
+    ;;
+  notifications-status)
+    if [[ "$(omarchy-shell notifications dndState 2>/dev/null || true)" == on ]]; then
+      printf '{"text":"󰂛","class":"dnd","tooltip":"Notifications silenced · Click for history · Right-click to unsilence"}\n'
+    else
+      printf '{"text":"󰂚","class":"normal","tooltip":"Omarchy notification history · Right-click to silence"}\n'
+    fi
+    ;;
+  status)
+    systemctl --user status "$unit" --no-pager
+    ;;
+  *)
+    echo 'Usage: athena-bar {enable|stock|toggle|colors|status}' >&2
+    exit 2
+    ;;
+esac

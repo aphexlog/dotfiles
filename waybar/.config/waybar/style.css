@@ -1,0 +1,98 @@
+/* Athena floating capsules, adapted from https://github.com/haikal-hakim/athena.
+ * Copyright (c) 2026 Muhammad Haikal Hakim. MIT; see waybar/LICENSE.
+ * Matugen colors are imported by the generated cache stylesheet, not stored here.
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 16px;
+}
+
+window#waybar { background: transparent; color: @on_surface; }
+tooltip {
+  background: @surface_container;
+  color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 14px;
+}
+tooltip label { padding: 8px 12px; }
+
+#distro-group, #storage, #system, #audio, #connections, #tray-group,
+#custom-power, #custom-idle, #custom-nightlight, #clock, #workspaces {
+  margin: 4px 5px;
+  background: @surface_container;
+  border-radius: 24px;
+  color: @secondary_fixed_dim;
+}
+
+#distro-group, #tray-group { padding: 0; }
+#storage, #system, #audio, #connections { padding: 6px; }
+#custom-distro { color: @primary; padding: 6px 15px 6px 10px; }
+#custom-terminal, #custom-editor, #custom-files, #custom-browser { padding: 0 10px; color: @tertiary; }
+#custom-browser { padding-right: 15px; }
+#disk, #memory, #temperature, #cpu, #bluetooth { margin-right: 2px; padding: 0 8px; }
+#network { padding: 0 10px 0 4px; }
+#pulseaudio { margin: 0 10px 0 8px; }
+#custom-power, #custom-idle, #custom-nightlight { padding: 6px 14px; }
+#custom-notifications { padding: 6px 14px 6px 10px; color: @primary; }
+#tray { padding: 6px 10px; }
+#tray > .passive, #tray > .active, #tray > .needs-attention { -gtk-icon-effect: none; }
+#clock { padding: 6px 16px; }
+
+/* Pac-Man and ghost workspaces retain Athena's expanding active capsule. */
+#workspaces { padding: 6px; }
+/* Numbered workspace controls use Lua IPC on Hyprland 0.56+. */
+#custom-workspace1, #custom-workspace2, #custom-workspace3,
+#custom-workspace4, #custom-workspace5 {
+  padding: 0 10px;
+  color: @tertiary;
+  border-radius: 18px;
+}
+#custom-workspace1.active, #custom-workspace2.active, #custom-workspace3.active,
+#custom-workspace4.active, #custom-workspace5.active {
+  background: @primary;
+  color: @on_primary;
+  font-weight: bold;
+  box-shadow: inset 0 -2px @tertiary;
+}
+#custom-workspace1:hover, #custom-workspace2:hover, #custom-workspace3:hover,
+#custom-workspace4:hover, #custom-workspace5:hover {
+  background: @surface_container_highest;
+  color: @primary;
+}
+#workspaces button {
+  min-width: 25px;
+  padding: 0 4px;
+  margin: 0 2px;
+  background: transparent;
+  border-radius: 18px;
+  color: @tertiary;
+  box-shadow: none;
+  text-shadow: none;
+  transition: all 250ms ease;
+}
+#workspaces button.active { padding: 0 12px; background: @primary; color: @on_primary; }
+#workspaces button.special { color: @tertiary_fixed; }
+#workspaces button.empty { color: @outline_variant; }
+#workspaces button:hover { background: @surface_container_highest; color: @primary; }
+#workspaces button.active:hover { background: @primary; color: @on_primary; }
+#workspaces button.urgent { color: @error; }
+#workspaces button label { padding: 0 2px; }
+
+/* The audio slider and extra launchers reveal on hover rather than crowding. */
+#pulseaudio-slider { margin: 4px 5px; padding: 0 2px; background: transparent; }
+#pulseaudio-slider trough { min-height: 8px; min-width: 80px; border-radius: 10px; background: @outline_variant; }
+#pulseaudio-slider highlight { min-height: 8px; border-radius: 10px; background: @secondary_fixed_dim; }
+#pulseaudio-slider slider { min-height: 12px; min-width: 12px; margin: -2px 0; border-radius: 100%; background: @primary; }
+#custom-idle.enabled, #custom-notifications.dnd { color: @tertiary; }
+#cpu.warning, #memory.warning { color: @tertiary_fixed; }
+#cpu.critical, #memory.critical, #temperature.critical, #network.disconnected { color: @error; }
+
+/* Keep the portrait screen comfortable without changing monitor scaling. */
+window.DP-7 * { font-size: 15px; }
+window.DP-7 #workspaces button { min-width: 19px; }

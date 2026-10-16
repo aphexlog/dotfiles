@@ -12,10 +12,10 @@ return {
     "L3MON4D3/LuaSnip",
   },
   build = function()
-    require("pkl-neovim.internal").init()
+    require("pkl-neovim").init()
 
-    -- Set up syntax highlighting.
-    vim.cmd("TSInstall! pkl")
+    -- Wait for parser installation with the current Treesitter API.
+    require("nvim-treesitter").install({ "pkl" }):wait(300000)
   end,
   config = function()
     -- Set up snippets.

@@ -1,0 +1,26 @@
+#compdef omarchy
+
+##############################################################################
+# Omarchy Completion
+##############################################################################
+
+# Reuse the installed Bash completer so command groups and argument choices stay
+# in sync with Omarchy updates, but present the results in Zsh's native menu.
+local -a candidates
+if [[ -r "${OMARCHY_PATH:-}/default/bash/completions" ]]; then
+  candidates=("${(@f)$(command bash --noprofile --norc -c '
+    COMP_CWORD=$1
+    shift
+    COMP_WORDS=("$@")
+    source "$OMARCHY_PATH/default/bash/completions"
+    _omarchy_complete
+    printf "%s\n" "${COMPREPLY[@]}"
+  ' omarchy-completion "$((CURRENT - 1))" "${words[@]}")}")
+  candidates=("${(@)candidates:#}")
+fi
+
+if (( ${#candidates} )); then
+  compadd -a candidates
+else
+  _files
+fi

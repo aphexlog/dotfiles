@@ -1,0 +1,19 @@
+[Unit]
+Description=Athena-inspired Waybar with Omarchy integration
+Documentation=https://github.com/haikal-hakim/athena
+PartOf=graphical-session.target
+After=graphical-session-pre.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+Type=simple
+ExecStartPre=%h/.local/bin/athena-bar colors --no-reload
+ExecStartPre=%h/.local/bin/athena-bar hide-stock
+ExecStart=%h/.local/bin/athena-bar run
+ExecStopPost=%h/.local/bin/athena-bar restore-stock
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical-session.target

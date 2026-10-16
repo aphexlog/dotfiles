@@ -2,7 +2,8 @@
   "$schema": "https://opencode.ai/config.json",
   "instructions": [
     "~/.config/opencode/instructions/commit-style.md",
-    "~/.config/opencode/instructions/aws.md"
+    "~/.config/opencode/instructions/aws.md",
+    "~/.config/opencode/instructions/local-models.md"
   ],
   // Load repo-managed skills and skills installed by the shared skills CLI.
   "skills": {

@@ -1,0 +1,25 @@
+{
+  "repository": "SC117/Qwen3.8-Flash-Next-GSQ-RCO-abliterated-GGUF",
+  "revision": "eec4e10a2c29b440a2ae85591fa11569ce752963",
+  "quantization": "IQ3_S",
+  "base_model": "Qwen/Qwen3.8-Flash-Next",
+  "base_license": "qwen-community-1.0",
+  "runtime": {
+    "release": "v0.7.0",
+    "build": "b11669",
+    "archive": "llama-b11669-bin-ubuntu-vulkan-x64.tar.gz",
+    "sha256": "e8709e5ba6c1b093dea7f3de57f4aba842f9a188fba6b465782d65d6fcfa4d9f"
+  },
+  "files": [
+    {
+      "path": "IQ3_S/Qwen3.8-Flash-Next-GSQ-RCO-abliterated-IQ3_S-00001-of-00002.gguf",
+      "size": 55063448064,
+      "sha256": "40f369eca301ec6ea318dbb671b3132c26a2f0b89aa5458a7051b33215ee296c"
+    },
+    {
+      "path": "IQ3_S/Qwen3.8-Flash-Next-GSQ-RCO-abliterated-IQ3_S-00002-of-00002.gguf",
+      "size": 28800138432,
+      "sha256": "316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113"
+    }
+  ]
+}

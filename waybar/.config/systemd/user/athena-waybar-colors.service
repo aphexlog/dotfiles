@@ -1,0 +1,7 @@
+[Unit]
+Description=Generate Athena Waybar colors from the current Omarchy wallpaper
+PartOf=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/athena-bar colors
