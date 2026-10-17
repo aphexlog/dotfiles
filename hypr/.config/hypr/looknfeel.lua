@@ -14,6 +14,9 @@ hl.config({
       active_border = { colors = { "rgba(55ddffff)", "rgba(a78bffff)" }, angle = 45 },
       inactive_border = "rgba(454b6688)",
     },
+
+    -- Require a Super-modified drag rather than resizing on ordinary taps.
+    resize_on_border = false,
   },
   -- Round the silhouette and add depth without reducing text opacity.
   decoration = {

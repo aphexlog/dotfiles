@@ -89,8 +89,8 @@ config.font_size = 13.0
 config.line_height = 1.05
 config.bold_brightens_ansi_colors = false
 
--- A clean, lightly translucent canvas without a redundant title bar.
-config.window_decorations = "RESIZE"
+-- Let Hyprland handle resizing without a client-side title bar or border.
+config.window_decorations = "NONE"
 config.window_background_opacity = 0.96
 config.window_padding = {
   left = 20,

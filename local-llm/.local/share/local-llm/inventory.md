@@ -12,6 +12,7 @@ updated when models or their management settings change.
   Do not restart it, make it the preferred model, or replace it without permission.
 - Runtime start/stop, login autostart, and OpenCode model selection are separate
   operations. Confirm ambiguous enable/disable scope rather than conflating them.
+- Prefer OpenCode's last-used model selection rather than a pinned local default.
 
 ## Qwen3.8 Flash Next Abliterated — IQ3_S
 
@@ -41,11 +42,18 @@ updated when models or their management settings change.
 
 ### Last verified state — 2026-10-16
 
-- Runtime: **stopped/inactive**, at the user's request because it was too slow.
-- Login autostart: **enabled**; stopping it did not disable startup at next login.
-- OpenCode configured default: still `local/qwen3.8-flash-next-abliterated`.
-  Existing sessions may instead have a cloud model selected. Do not infer session
-  selection from the configured default.
+- Runtime: **stopped/inactive**, at the user's request; verified the service is
+  inactive/dead and port 8080 has no listener.
+- Login autostart: **disabled**, at the user's request. The login target link was
+  removed; the installed Stow unit link is retained (`UnitFileState=linked`).
+- OpenCode configured default: **unset**; the root `model` override was removed
+  at the user's request so the terminal interface follows its last-used available
+  model. The latest observed selection is `openai/gpt-6.1-sol` with `xhigh` effort.
+  Existing sessions keep their own selection; recent-model state was not changed.
+- Reload verification: the shared OpenCode service retained the removed Qwen
+  default until `opencode api post /api/location/reload`. Live configuration for
+  the home and dotfiles locations now has no model override. A fresh terminal
+  client showed **GPT-6.1 Sol / xhigh**, without sending any inference request.
 - Weights and provider entry: retained. Restarting does not need another download.
 - Configurations, scripts, this inventory, and the manifest are Stow symlinks into
   the dotfiles repository. Weights, binaries, and generated results remain in the

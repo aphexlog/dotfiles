@@ -1,13 +1,13 @@
 -- Keep only your personal input overrides here. Uncommented settings below
 -- replace Omarchy's defaults.
 
--- Reverse scrolling and require a physical press for touchpad clicks.
+-- Keep natural scrolling and allow touchpad clicks with a light tap.
 hl.config({
   input = {
     natural_scroll = true,
     touchpad = {
       natural_scroll = true,
-      tap_to_click = false,
+      tap_to_click = true,
     },
   },
 })
