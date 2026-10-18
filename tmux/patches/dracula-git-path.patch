@@ -1,0 +1,17 @@
+diff --git a/scripts/git.sh b/scripts/git.sh
+--- a/scripts/git.sh
++++ b/scripts/git.sh
+@@ -9,1 +9,1 @@
+-IFS=' ' read -r -a no_repo_message <<< $(get_tmux_option "@dracula-git-no-repo-message" "")
++no_repo_message="$(get_tmux_option "@dracula-git-no-repo-message" "")"
+@@ -169,2 +169,10 @@
+     path=$(get_pane_dir)
++    if [[ "$no_repo_message" == '#{pane_current_path}' ]]; then
++        no_repo_message="$path"
++        if [[ "$path" == "$HOME" ]]; then
++            no_repo_message='~'
++        elif [[ "$path" == "$HOME/"* ]]; then
++            no_repo_message="~/${path#"$HOME/"}"
++        fi
++    fi
+     getMessage
