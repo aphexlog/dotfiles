@@ -21,3 +21,12 @@
   unless browser login fails, is cancelled, or times out.
 - If the relevant account is unclear, let `aws-readonly` discover candidate accounts;
   ask the user only when ambiguity remains.
+
+## Browser authentication preference
+
+- Always open authentication windows in Chromium's Personal profile (`Default`)
+  so the user's password-manager extension is available.
+- Open sign-in URLs with `chromium --profile-directory=Default <url>`; do not use
+  incognito, temporary browser data directories, or account-specific profiles.
+- For AWS SSO, use `aws sso login --no-browser` with the approved profile/session,
+  open its authorization URL in that Personal profile, and wait for completion.

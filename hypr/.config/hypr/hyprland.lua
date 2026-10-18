@@ -27,3 +27,20 @@ require("default.hypr.toggles")
 
 -- Add any other personal Hyprland configuration below.
 -- o.window("qemu", { workspace = "5" })
+
+-- ##############################################################################
+-- # Steam Game Placement
+-- ##############################################################################
+
+-- Launch Steam games centered on the left monitor at half its width and height.
+-- Ignore game-requested fullscreen and X11 geometry changes after placement.
+o.window("^steam_app_[0-9]+$", {
+  monitor = "DP-12",
+  float = true,
+  fullscreen = false,
+  fullscreen_state = "0 0",
+  size = { "monitor_w*0.5", "monitor_h*0.5" },
+  center = true,
+  suppress_event = "fullscreen maximize fullscreenoutput x11configurerequest",
+  persistent_size = false,
+})
