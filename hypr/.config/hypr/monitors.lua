@@ -5,7 +5,7 @@
 local omarchy_gdk_scale = 1
 
 hl.env("GDK_SCALE", tostring(omarchy_gdk_scale))
-hl.monitor({ output = "DP-12", mode = "3840x2160@60", position = "0x0", scale = 1, transform = 0 })
+hl.monitor({ output = "DP-12", mode = "3840x2160@60", position = "0x450", scale = 1, transform = 0 })
 hl.monitor({ output = "DP-7", mode = "3840x2160@60", position = "3840x0", scale = 1.2, transform = 1 })
 
 -- Keep the first two workspaces ordered from left to right.
