@@ -17,6 +17,12 @@ require("default.hypr.omarchy")
 -- defaults so package updates can improve the defaults without rewriting your
 -- ~/.config/hypr files.
 require("hypr.monitors")
+
+-- This machine's monitor layout. Kept out of the dotfiles repo because it names
+-- specific hardware; see the header of ~/.config/hypr/monitors-local.lua.
+local require_optional = require("default.hypr.require_optional")
+require_optional.module("hypr.monitors-local")
+
 require("hypr.input")
 require("hypr.bindings")
 require("hypr.looknfeel")
@@ -34,8 +40,10 @@ require("default.hypr.toggles")
 
 -- Launch Steam games centered on the left monitor at half its width and height.
 -- Ignore game-requested fullscreen and X11 geometry changes after placement.
+-- Matched by monitor description: the connector name (DP-12) stopped existing
+-- when the MST hub renumbered its ports.
 o.window("^steam_app_[0-9]+$", {
-  monitor = "DP-12",
+  monitor = "desc:LG Electronics LG Ultra HD 0x0000DCEF",
   float = true,
   fullscreen = false,
   fullscreen_state = "0 0",
