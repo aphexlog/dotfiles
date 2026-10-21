@@ -1,8 +1,25 @@
 /* Athena floating capsules, adapted from https://github.com/haikal-hakim/athena.
  * Copyright (c) 2026 Muhammad Haikal Hakim. MIT; see waybar/LICENSE.
- * Matugen colors are imported by the generated cache stylesheet, not stored here.
+ * Toolbar-only cyber palette, independent of wallpaper-generated colors.
  */
 
+/* ============================================================================
+ * Cyber HUD Palette
+ * ========================================================================== */
+@define-color on_surface #d8f7ff;
+@define-color surface_container #090f20;
+@define-color surface_container_highest #172b42;
+@define-color outline_variant #25485e;
+@define-color primary #00e5ff;
+@define-color on_primary #04111c;
+@define-color secondary_fixed_dim #85dfff;
+@define-color tertiary #f072ff;
+@define-color tertiary_fixed #ffc36a;
+@define-color error #ff467e;
+
+/* ============================================================================
+ * Panel Geometry and Typography
+ * ========================================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -13,21 +30,29 @@
   font-size: 16px;
 }
 
-window#waybar { background: transparent; color: @on_surface; }
+window#waybar {
+  background: transparent;
+  color: @on_surface;
+  border: none;
+  border-radius: 0;
+}
 tooltip {
   background: @surface_container;
   color: @on_surface;
-  border: 1px solid @outline_variant;
-  border-radius: 14px;
+  border: 1px solid @primary;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
 }
 tooltip label { padding: 8px 12px; }
 
 #distro-group, #storage, #system, #audio, #connections, #tray-group,
 #custom-power, #custom-idle, #custom-nightlight, #clock, #workspaces {
-  margin: 4px 5px;
-  background: @surface_container;
-  border-radius: 24px;
+  margin: 4px 3px;
+  background: linear-gradient(135deg, #111d32, #080e1c);
+  border: 1px solid @outline_variant;
+  border-radius: 4px;
   color: @secondary_fixed_dim;
+  box-shadow: inset 0 1px rgba(133, 223, 255, 0.08);
 }
 
 #distro-group, #tray-group { padding: 0; }
@@ -42,23 +67,54 @@ tooltip label { padding: 8px 12px; }
 #custom-notifications { padding: 6px 14px 6px 10px; color: @primary; }
 #tray { padding: 6px 10px; }
 #tray > .passive, #tray > .active, #tray > .needs-attention { -gtk-icon-effect: none; }
-#clock { padding: 6px 16px; }
+#clock {
+  padding: 6px 16px;
+  color: @primary;
+  border-color: rgba(0, 229, 255, 0.6);
+  font-weight: bold;
+  text-shadow: 0 0 6px rgba(0, 229, 255, 0.5);
+}
 
-/* Pac-Man and ghost workspaces retain Athena's expanding active capsule. */
+/* ============================================================================
+ * Neon Accents and Interactive States
+ * ========================================================================== */
+#distro-group { border-left: 2px solid @primary; }
+#system { border-bottom-color: @tertiary; }
+#connections { border-bottom-color: @primary; }
+#custom-power { color: @tertiary; border-color: rgba(240, 114, 255, 0.55); }
+#custom-distro, #custom-notifications { text-shadow: 0 0 6px rgba(0, 229, 255, 0.45); }
+#custom-distro:hover, #custom-terminal:hover, #custom-editor:hover,
+#custom-files:hover, #custom-browser:hover, #custom-notifications:hover,
+#bluetooth:hover, #network:hover, #pulseaudio:hover {
+  color: @on_surface;
+  text-shadow: 0 0 8px @primary;
+}
+#custom-power:hover, #custom-idle:hover, #custom-nightlight:hover, #clock:hover {
+  background: @surface_container_highest;
+  border-color: @primary;
+  box-shadow: inset 0 -2px @primary;
+}
+
+/* ============================================================================
+ * Illuminated Workspace Controls
+ * ========================================================================== */
 #workspaces { padding: 6px; }
 /* Numbered workspace controls use Lua IPC on Hyprland 0.56+. */
 #custom-workspace1, #custom-workspace2, #custom-workspace3,
 #custom-workspace4, #custom-workspace5 {
   padding: 0 10px;
   color: @tertiary;
-  border-radius: 18px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: all 180ms ease;
 }
 #custom-workspace1.active, #custom-workspace2.active, #custom-workspace3.active,
 #custom-workspace4.active, #custom-workspace5.active {
-  background: @primary;
+  background: linear-gradient(120deg, #00e5ff, #759dff);
   color: @on_primary;
   font-weight: bold;
-  box-shadow: inset 0 -2px @tertiary;
+  border-color: @primary;
+  box-shadow: 0 0 7px rgba(0, 229, 255, 0.45), inset 0 -2px @tertiary;
 }
 #custom-workspace1:hover, #custom-workspace2:hover, #custom-workspace3:hover,
 #custom-workspace4:hover, #custom-workspace5:hover {
@@ -70,7 +126,7 @@ tooltip label { padding: 8px 12px; }
   padding: 0 4px;
   margin: 0 2px;
   background: transparent;
-  border-radius: 18px;
+  border-radius: 3px;
   color: @tertiary;
   box-shadow: none;
   text-shadow: none;
@@ -84,11 +140,13 @@ tooltip label { padding: 8px 12px; }
 #workspaces button.urgent { color: @error; }
 #workspaces button label { padding: 0 2px; }
 
-/* The audio slider and extra launchers reveal on hover rather than crowding. */
+/* ============================================================================
+ * Audio, Status Indicators, and Portrait Sizing
+ * ========================================================================== */
 #pulseaudio-slider { margin: 4px 5px; padding: 0 2px; background: transparent; }
-#pulseaudio-slider trough { min-height: 8px; min-width: 80px; border-radius: 10px; background: @outline_variant; }
-#pulseaudio-slider highlight { min-height: 8px; border-radius: 10px; background: @secondary_fixed_dim; }
-#pulseaudio-slider slider { min-height: 12px; min-width: 12px; margin: -2px 0; border-radius: 100%; background: @primary; }
+#pulseaudio-slider trough { min-height: 6px; min-width: 80px; border-radius: 2px; background: @outline_variant; }
+#pulseaudio-slider highlight { min-height: 6px; border-radius: 2px; background: linear-gradient(90deg, @primary, @tertiary); }
+#pulseaudio-slider slider { min-height: 12px; min-width: 6px; margin: -3px 0; border-radius: 2px; background: @on_surface; box-shadow: 0 0 5px @primary; }
 #custom-idle.enabled, #custom-notifications.dnd { color: @tertiary; }
 #cpu.warning, #memory.warning { color: @tertiary_fixed; }
 #cpu.critical, #memory.critical, #temperature.critical, #network.disconnected { color: @error; }

@@ -34,6 +34,10 @@ require("default.hypr.toggles")
 -- Add any other personal Hyprland configuration below.
 -- o.window("qemu", { workspace = "5" })
 
+-- WezTerm's Linux app-id differs from the class in Omarchy's terminal defaults.
+-- The terminal tag makes universal Super+C/V send Ctrl/Shift+Insert.
+o.window("^org\\.wezfurlong\\.wezterm$", { tag = "+terminal" })
+
 -- ##############################################################################
 -- # Steam Game Placement
 -- ##############################################################################
