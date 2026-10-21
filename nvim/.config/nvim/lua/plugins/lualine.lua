@@ -6,7 +6,9 @@ return {
   "nvim-lualine/lualine.nvim",
   opts = function(_, opts)
     -- Match the editor palette and soften the transitions between sections.
-    opts.options.theme = "catppuccin"
+    -- catppuccin ships flavour-specific lualine themes; plain "catppuccin" is
+    -- no longer registered and makes lualine fall back to "auto" with a notice.
+    opts.options.theme = "catppuccin-mocha"
     opts.options.globalstatus = true
     opts.options.component_separators = ""
     opts.options.section_separators = { left = "", right = "" }
