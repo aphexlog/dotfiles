@@ -5,6 +5,10 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+-- Linux runs under Hyprland; macOS keeps its native window chrome and terminal
+-- database defaults.
+local is_macos = wezterm.target_triple:find("darwin") ~= nil
+
 -- ##############################################################################
 -- # Appearance
 -- ##############################################################################
@@ -84,13 +88,17 @@ config.colors = {
 }
 
 -- Preserve the font size, with Nerd Font glyphs for prompts and terminal tools.
-config.font = wezterm.font_with_fallback({ "JetBrainsMono Nerd Font", "JetBrains Mono" })
+-- JetBrains Mono stays primary because it is installed everywhere; the Nerd Font
+-- build is only a fallback, so machines without it keep the same metrics.
+config.font = wezterm.font_with_fallback({ "JetBrains Mono", "JetBrainsMono Nerd Font" })
 config.font_size = 13.0
 config.line_height = 1.05
 config.bold_brightens_ansi_colors = false
 
--- Let Hyprland handle resizing without a client-side title bar or border.
-config.window_decorations = "NONE"
+-- Let Hyprland handle resizing without a client-side title bar or border. macOS
+-- keeps its normal traffic-light title bar: WezTerm documents that NONE breaks
+-- resize/minimise and window focus there.
+config.window_decorations = is_macos and "TITLE | RESIZE" or "NONE"
 config.window_background_opacity = 0.96
 config.window_padding = {
   left = 20,
@@ -117,8 +125,10 @@ config.command_palette_fg_color = palette.foreground
 -- # Terminal Settings
 -- ##############################################################################
 
--- TERM variable (supports 256 colors and proper rendering)
-config.term = "wezterm"
+-- TERM variable (supports 256 colors and proper rendering). The wezterm terminfo
+-- entry is installed by the Linux package; macOS has no such entry unless it was
+-- added by hand with `tic`, so keep the portable default there.
+config.term = is_macos and "xterm-256color" or "wezterm"
 
 -- Pick up edits to this Stow-managed configuration without restarting shells.
 config.automatically_reload_config = true

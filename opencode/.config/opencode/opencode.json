@@ -4,6 +4,7 @@
   "autoupdate": false,
   "instructions": [
     "~/.config/opencode/instructions/commit-style.md",
+    "~/.config/opencode/instructions/pr-style.md",
     "~/.config/opencode/instructions/aws.md",
     "~/.config/opencode/instructions/local-models.md"
   ],

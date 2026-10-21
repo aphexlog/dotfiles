@@ -37,6 +37,26 @@ hl.unbind("SUPER + SHIFT + SPACE")
 o.bind("SUPER + SHIFT + SPACE", "Toggle top bar", "$HOME/.local/bin/athena-bar toggle")
 
 -- ##############################################################################
+-- # Programmatic Display Configuration Only
+-- ##############################################################################
+
+-- Disable display settings, scaling, output toggling, and mirroring shortcuts.
+-- Edit ~/.config/hypr/monitors-local.lua or use hyprctl instead.
+hl.unbind("SUPER + SLASH")
+hl.unbind("SUPER + ALT + SLASH")
+hl.unbind("SUPER + CTRL + D")
+hl.unbind("SUPER + CTRL + Delete")
+hl.unbind("SUPER + CTRL + ALT + Delete")
+
+-- ##############################################################################
+-- # Per-Monitor Wallpapers
+-- ##############################################################################
+
+-- Replace the stock Background switcher with the custom set for each monitor.
+hl.unbind("SUPER + CTRL + SPACE")
+o.bind("SUPER + CTRL + SPACE", "Per-monitor wallpaper picker", "$HOME/.local/bin/wallpaper-monitor-pick")
+
+-- ##############################################################################
 -- # Clipboard and Selection
 -- ##############################################################################
 

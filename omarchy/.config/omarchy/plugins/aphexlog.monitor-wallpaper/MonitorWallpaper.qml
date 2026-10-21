@@ -2,8 +2,9 @@
 //
 // The stock Omarchy background service paints one image on every output, so it
 // cannot show a different wallpaper per screen. This third-party service maps a
-// wallpaper to each screen *orientation* and renders it on the background layer,
-// which is mapped after the first-party background and therefore above it.
+// wallpaper to each screen *orientation* and renders it on the bottom layer,
+// above the first-party background but below application windows. Same-layer
+// mapping order is not reliable after monitor rotation or repositioning.
 //
 // Landscape screens keep the stock wallpaper (this surface stays transparent),
 // but the panel still takes the background double-click so it can open the
@@ -103,7 +104,7 @@ Item {
       anchors { top: true; bottom: true; left: true; right: true }
       exclusionMode: ExclusionMode.Ignore
 
-      WlrLayershell.layer: WlrLayer.Background
+      WlrLayershell.layer: WlrLayer.Bottom
       WlrLayershell.namespace: "omarchy-monitor-wallpaper"
       WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 
