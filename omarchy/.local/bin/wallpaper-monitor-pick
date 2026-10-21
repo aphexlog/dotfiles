@@ -1,0 +1,129 @@
+#!/bin/bash
+
+# omarchy:summary=Pick a wallpaper for the monitor under the cursor
+# omarchy:args=[left|right]
+#
+# Shows the image menu for the monitor under the pointer and applies the pick to
+# that monitor only. Landscape screens use the stock Omarchy background; portrait
+# screens use the aphexlog.monitor-wallpaper shell plugin, which paints above it.
+#
+# Sets live in ~/Pictures/wallpapers/monitors/{left,right}.
+
+set -uo pipefail
+
+SETS="$HOME/Pictures/wallpapers/monitors"
+STATE="$HOME/.config/omarchy/monitor-wallpapers.json"
+CURRENT_BACKGROUND="$HOME/.local/state/omarchy/current/background"
+
+print_only=false
+[[ ${WALLPAPER_PICK_PRINT:-0} == "1" ]] && print_only=true
+
+slot=""
+case "${1:-}" in
+  left|landscape|wide|primary) slot="landscape" ;;
+  right|portrait|tall|vertical) slot="portrait" ;;
+esac
+
+if [[ -z $slot ]]; then
+  slot=$(
+    python3 - <<'PY'
+import json
+import subprocess
+
+
+def run(*args):
+    try:
+        return json.loads(subprocess.run(args, capture_output=True, text=True).stdout)
+    except Exception:
+        return None
+
+
+cursor = run("hyprctl", "cursorpos", "-j") or {"x": 0, "y": 0}
+monitors = run("hyprctl", "monitors", "-j") or []
+
+
+def logical(monitor):
+    width, height = monitor.get("width", 0), monitor.get("height", 0)
+    if monitor.get("transform") in (1, 3):
+        width, height = height, width
+    scale = monitor.get("scale", 1) or 1
+    return width / scale, height / scale
+
+
+def slot_for(monitor):
+    width, height = logical(monitor)
+    return "portrait" if height > width else "landscape"
+
+
+for monitor in monitors:
+    x, y = monitor.get("x", 0), monitor.get("y", 0)
+    width, height = logical(monitor)
+    if x <= cursor.get("x", 0) < x + width and y <= cursor.get("y", 0) < y + height:
+        print(slot_for(monitor))
+        break
+else:
+    focused = next((m for m in monitors if m.get("focused")), None)
+    print(slot_for(focused) if focused else "landscape")
+PY
+  )
+fi
+
+case "$slot" in
+  portrait) dir="$SETS/right" ;;
+  *) dir="$SETS/left" ;;
+esac
+
+[[ -d $dir ]] || { echo "No wallpaper set at $dir" >&2; exit 1; }
+
+if $print_only; then
+  echo "slot=$slot"
+  echo "dir=$dir"
+  exit 0
+fi
+
+
+if [[ $slot == portrait ]]; then
+  selected=$(
+    python3 - "$STATE" <<'PY'
+import json
+import sys
+
+try:
+    with open(sys.argv[1]) as handle:
+        print(json.load(handle).get("portrait", ""))
+except Exception:
+    print("")
+PY
+  )
+else
+  selected=$(readlink -f "$CURRENT_BACKGROUND" 2>/dev/null || true)
+fi
+
+chosen=$(omarchy-menu-images --selected "$selected" "$dir")
+[[ -n $chosen ]] || exit 0
+
+if [[ $slot == portrait ]]; then
+  python3 - "$STATE" "$chosen" <<'PY'
+import json
+import os
+import sys
+
+state_path, image = sys.argv[1], sys.argv[2]
+data = {}
+try:
+    with open(state_path) as handle:
+        data = json.load(handle)
+    if not isinstance(data, dict):
+        data = {}
+except Exception:
+    data = {}
+data["portrait"] = image
+os.makedirs(os.path.dirname(state_path), exist_ok=True)
+with open(state_path, "w") as handle:
+    json.dump(data, handle, indent=2)
+    handle.write("\n")
+PY
+  omarchy-shell -q monitor-wallpaper refresh >/dev/null 2>&1 || true
+else
+  omarchy-theme-bg-set "$chosen"
+fi

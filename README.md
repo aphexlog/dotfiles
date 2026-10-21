@@ -36,6 +36,7 @@ plugins can be installed with `brew install zsh-autosuggestions zsh-syntax-highl
 - **nvim** - Neovim configuration
 - **foot** - Foot terminal settings, including font size and key bindings
 - **hypr** - Current Omarchy/Hyprland user configuration, including monitor and trackpad settings
+- **omarchy** - Omarchy shell config: per-monitor wallpaper service, picker, and menu override
 - **opencode** - OpenCode settings, agents, commands, and persistent instructions
 - **local-llm** - Local-model scripts, manifest, inventory, and user service; no weights or binaries
 - **steam** - Steam desktop launcher with explicit 1× application scaling
@@ -107,6 +108,34 @@ it does **not** download weights or runtime binaries, start the model, or enable
 login autostart. Those artifacts and generated results remain under the real
 `~/.local/share/local-llm/` directory, outside this repository. See its Stow-managed
 `README.md` and `inventory.md` for model operations and the user's preferences.
+
+### Per-monitor wallpapers
+
+Stock Omarchy paints one background on every output. The `omarchy` package adds a
+shell service that paints a second background above it, keyed by screen
+**orientation** rather than connector name, because the DisplayPort MST hub on this
+machine renumbers DP-12/DP-7 to DP-13/DP-8:
+
+```bash
+stow --no-folding --target "$HOME" omarchy
+omarchy restart shell
+```
+
+It links `~/.config/omarchy/shell.json` (which registers the plugin), the
+`aphexlog.monitor-wallpaper` service, the `style.background` menu override, and
+`~/.local/bin/wallpaper-monitor-pick`. The picker opens the usual image menu for the
+monitor under the pointer (`SUPER + CTRL + SPACE`, or menu → Style → Background) and
+applies the choice to that screen only: landscape goes through
+`omarchy-theme-bg-set`, portrait is stored in
+`~/.config/omarchy/monitor-wallpapers.json` and rendered by the plugin.
+
+Wallpaper art is **not** in this repository. `wallpaper-monitor-pick` reads
+`~/Pictures/wallpapers/monitors/{left,right}` (16:9 and 9:16 sets), and that
+directory's `README.md` lists every source URL and the undo steps. `monitor-wallpapers.json`
+is machine-local runtime state and is intentionally untracked; the picker recreates
+it on first use. The linked `shell.json` also registers the separately installed
+`io.github.wesleycole.google-drive` bar plugin, so drop that entry (and its tray
+item) on a machine without it.
 
 Foot and Steam have their own packages as well:
 

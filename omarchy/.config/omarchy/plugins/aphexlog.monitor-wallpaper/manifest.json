@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "aphexlog.monitor-wallpaper",
+  "name": "Monitor Wallpaper",
+  "version": "1.0.0",
+  "author": "aphexlog",
+  "license": "MIT",
+  "description": "Renders a per-monitor background on top of the stock Omarchy background, keyed by screen orientation.",
+  "kinds": [
+    "service"
+  ],
+  "entryPoints": {
+    "service": "MonitorWallpaper.qml"
+  }
+}
