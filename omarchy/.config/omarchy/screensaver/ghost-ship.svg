@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="620" viewBox="0 0 560 620">
+  <defs>
+    <linearGradient id="sail" x2="1" y2="1">
+      <stop stop-color="#63f5ed" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#63f5ed" stop-opacity=".01"/>
+    </linearGradient>
+    <linearGradient id="hull" x2="0" y2="1">
+      <stop stop-color="#15333d"/>
+      <stop offset="1" stop-color="#060b13"/>
+    </linearGradient>
+  </defs>
+  <!-- A spectral corsair: angular sails, a black flag, and an ion-drive hull. -->
+  <g fill="none" stroke="#244451" stroke-width="1">
+    <circle cx="280" cy="285" r="240" stroke-dasharray="3 14"/>
+    <path d="M18 285H62 M498 285H542 M280 25V60 M280 510V548"/>
+    <path d="M74 79H115 M74 79V120 M445 79H486V120 M74 462V503H115 M445 503H486V462"/>
+  </g>
+  <!-- Rigging is deliberately transparent, like a projected navigation model. -->
+  <g fill="none" stroke="#2f6470" stroke-width="1">
+    <path d="M93 424L268 112L474 424 M162 436L268 112L367 440 M112 425L390 192L458 427"/>
+    <path d="M268 145L132 265 M268 145L412 265 M390 218L475 326"/>
+  </g>
+  <g stroke="#63f5ed" stroke-width="3" fill="none">
+    <path d="M268 109V434 M390 190V433 M165 255V437"/>
+    <path d="M122 259H409 M145 347H396 M329 281H487 M96 333H224"/>
+  </g>
+  <g fill="url(#sail)" stroke="#63f5ed" stroke-width="1.8" stroke-linejoin="bevel">
+    <path d="M260 158L144 251Q201 233 260 252Z"/>
+    <path d="M279 158L398 251Q334 232 279 252Z"/>
+    <path d="M146 269Q135 310 155 335Q205 317 258 338L258 269Z"/>
+    <path d="M279 269L389 269Q378 306 391 335Q336 318 279 338Z"/>
+    <path d="M166 357Q149 384 164 404Q206 389 257 407L257 357Z"/>
+    <path d="M279 357H377Q363 386 376 404Q322 391 279 407Z"/>
+    <path d="M400 223L474 274L400 274Z M405 292H476L453 351L405 358Z"/>
+    <path d="M155 286L103 326L155 326Z"/>
+  </g>
+  <!-- Segmented sail mesh makes the ship feel like a holographic reconstruction. -->
+  <g stroke="#63f5ed" stroke-width=".8" opacity=".3" fill="none">
+    <path d="M160 283H253 M155 296H253 M156 309H253 M285 282H380 M285 296H378 M285 310H379"/>
+    <path d="M184 270L183 326 M212 270V328 M239 270V332 M306 270V328 M335 270V326 M362 270V329"/>
+    <path d="M183 371H252 M177 385H252 M286 371H368 M286 385H366"/>
+  </g>
+  <path d="M269 108Q298 89 330 108L320 132Q291 116 269 137Z" fill="#140f21" stroke="#f275cf" stroke-width="2"/>
+  <g fill="none" stroke="#f275cf" stroke-width="1.4">
+    <path d="M290 109L309 124 M309 109L290 124"/>
+    <path d="M296 107H304L308 113L304 119H296L292 113Z" fill="#f275cf"/>
+  </g>
+  <path d="M64 418L132 432L424 432L499 396L467 453L421 482H166L121 464Z" fill="url(#hull)" stroke="#b6fff6" stroke-width="2.5"/>
+  <path d="M91 429L139 447L435 447L480 421 M145 452L171 470H414L446 453" fill="none" stroke="#63f5ed" stroke-width="1.5"/>
+  <g stroke="#3e7783" stroke-width="1" fill="none">
+    <path d="M177 435L193 478 M219 435L229 478 M263 435V478 M307 435L302 478 M351 435L338 478 M395 435L374 478"/>
+  </g>
+  <g fill="#f275cf">
+    <path d="M192 452H205V457H192Z M235 452H248V457H235Z M278 452H291V457H278Z M321 452H334V457H321Z M364 452H377V457H364Z"/>
+    <path d="M169 485H414L389 490H190Z" opacity=".8"/>
+  </g>
+  <g stroke="#63f5ed" fill="none" opacity=".35">
+    <path d="M105 504H460 M140 516H421 M175 528H388" stroke-dasharray="40 12 3 9"/>
+    <path d="M200 546H357 M225 560H332" stroke-dasharray="14 8"/>
+  </g>
+</svg>

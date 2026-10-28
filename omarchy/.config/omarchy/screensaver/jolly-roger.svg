@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640">
+  <!-- Broad swept cutlasses read clearly even when rasterized to terminal cells. -->
+  <g fill="#fff" stroke="#000" stroke-width="9" stroke-linejoin="round">
+    <path d="M38 45Q54 200 188 320L435 543L466 508L226 277Q101 156 38 45Z"/>
+    <path d="M602 45Q586 200 452 320L205 543L174 508L414 277Q539 156 602 45Z"/>
+  </g>
+  <g fill="none" stroke="#000" stroke-width="5">
+    <path d="M76 127Q108 218 214 310L432 512 M564 127Q532 218 426 310L208 512"/>
+  </g>
+  <!-- Large white cranium, one hollow angry socket, and a heavy pirate eyepatch. -->
+  <path d="M320 77Q211 72 173 142Q147 186 159 248L175 293L166 326L207 351L221 392L241 410L244 442Q320 475 396 442L399 410L419 392L433 351L474 326L465 293L481 248Q493 186 467 142Q429 72 320 77Z"
+        fill="#fff" stroke="#000" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M179 200L278 230L267 270Q233 293 195 267Z" fill="#000"/>
+  <path d="M159 166L467 276" fill="none" stroke="#000" stroke-width="27"/>
+  <path d="M352 204L426 203L455 229L438 276L390 289L354 264Z" fill="#000"/>
+  <path d="M375 224L430 242 M404 218L398 264" fill="none" stroke="#fff" stroke-width="6"/>
+  <path d="M316 267L290 319L307 328L320 316L333 328L350 319L324 267Z" fill="#000"/>
+  <path d="M184 300L220 312L242 344L211 333Z M456 300L420 312L398 344L429 333Z" fill="#000"/>
+  <!-- A wide, uneven grin and segmented jaw give this skull its own silhouette. -->
+  <path d="M229 351L259 342L320 350L381 342L411 351L400 399L374 424H266L240 399Z" fill="#000"/>
+  <g fill="#fff">
+    <path d="M242 354L263 350V374H242Z M270 352L290 354V379H270Z M298 355H316V380H298Z M324 355H342V380H324Z M350 354L370 352V379H350Z M378 350L398 354L395 374H378Z"/>
+    <path d="M248 387L268 391V409L255 399Z M276 393H294V416H276Z M302 394H318V417H302Z M326 394H342V417H326Z M350 393H368V416H350Z M376 391L391 386L385 399L376 409Z"/>
+  </g>
+  <!-- Fractures and a nicked cheek keep the emblem from looking like a mascot. -->
+  <g fill="none" stroke="#000" stroke-width="7">
+    <path d="M307 81L292 120L310 140L295 170 M292 120L268 125"/>
+    <path d="M456 170L442 184L446 201 M174 260L190 282L182 295"/>
+  </g>
+  <!-- Swept guards, wrapped grips, and pommels below the crossing blades. -->
+  <g fill="#fff" stroke="#000" stroke-width="6">
+    <path d="M415 495Q447 485 483 524L472 548Q433 514 403 519Z"/>
+    <path d="M225 495Q193 485 157 524L168 548Q207 514 237 519Z"/>
+    <path d="M446 535L469 518L520 575L497 596Z M194 535L171 518L120 575L143 596Z"/>
+    <path d="M486 589L512 567L529 585L503 608Z M154 589L128 567L111 585L137 608Z"/>
+  </g>
+  <g stroke="#000" stroke-width="6">
+    <path d="M455 548L478 533 M467 561L490 546 M479 574L502 559 M185 548L162 533 M173 561L150 546 M161 574L138 559"/>
+  </g>
+</svg>

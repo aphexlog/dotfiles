@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euo pipefail
+
+##############################################################################
+# Cyber Pirate Screensaver
+##############################################################################
+
+# Keep the graphical scene available explicitly; text effects are the default.
+config="$HOME/.config/omarchy/screensaver"
+if [[ ${1:-} != --preview ]]; then
+  if [[ $(omarchy-shell lock isLocked 2>/dev/null) == true ]]; then exit 0; fi
+  if omarchy-toggle-enabled screensaver-off && [[ ${1:-} != force ]]; then exit 0; fi
+fi
+
+if [[ ${1:-} == --hologram ]]; then
+  export QS_APP_ID=org.omarchy.screensaver
+  exec -a "$QS_APP_ID" quickshell --path "$config/shell.qml" --no-duplicate
+fi
+
+# Use the installed Foot only for the screensaver; do not change the terminal default.
+exec python "$config/terminal-effects.py" "$@"
