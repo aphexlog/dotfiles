@@ -1,0 +1,9 @@
+[SddmGreeterTheme]
+Name=Cyber Pirate
+Description=Cyber-pirate login screen matching the custom session lock
+Author=aphexlog
+Type=sddm-theme
+Version=1.0
+MainScript=Main.qml
+Theme-API=2.0
+QtVersion=6

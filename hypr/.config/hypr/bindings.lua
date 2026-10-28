@@ -15,6 +15,33 @@
 -- Add a new binding.
 -- o.bind("SUPER + SHIFT + R", "SSH", "alacritty -e ssh your-server")
 
+-- Summon the keyboard-navigable Chrono calendar.
+o.bind("SUPER + ALT + C", "Chrono calendar", "omarchy-shell shell toggle aphexlog.clock")
+
+-- Open OLauncher's app and file search.
+hl.unbind("SUPER + SPACE")
+o.bind("SUPER + SPACE", "OLauncher", "omarchy-shell shell toggle olauncher '{}'")
+o.bind("ALT + SPACE", "OLauncher", "omarchy-shell shell toggle olauncher '{}'")
+
+-- Drag a screenshot region and copy it directly to the clipboard.
+o.bind("SUPER + CTRL + SHIFT + 4", "Region screenshot to clipboard", "omarchy capture screenshot region copy")
+
+-- Replace move-to-workspace-5 with region recording; press again to finish.
+hl.unbind("SUPER + SHIFT + code:14")
+hl.unbind("SUPER + SHIFT + 5")
+o.bind("SUPER + SHIFT + 5", "Region recording to clipboard", "$HOME/.local/bin/record-region-clipboard")
+
+-- Replace Calculator with the requested lock shortcut.
+hl.unbind("SUPER + CTRL + Q")
+o.bind("SUPER + CTRL + Q", "Lock computer", "omarchy system lock")
+
+-- ##############################################################################
+-- # Cyber Scratchpad Terminal
+-- ##############################################################################
+
+-- Show/hide a persistent terminal above the current workspace.
+o.bind("SUPER + GRAVE", "Cyber scratchpad terminal", "$HOME/.local/bin/cyber-scratchpad")
+
 -- Change an existing binding by unbinding it first, then binding the key again.
 -- This example changes SUPER+SPACE from the launcher to the Omarchy root menu.
 -- hl.unbind("SUPER + SPACE")

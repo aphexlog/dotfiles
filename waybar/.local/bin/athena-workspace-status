@@ -2,12 +2,13 @@
 set -euo pipefail
 
 ##############################################################################
-# Focused Workspace Indicator
+# Per-Monitor Workspace Indicator
 ##############################################################################
 
-# Emit Waybar's active class for the globally focused desktop.
+# Highlight the visible desktop on each monitor; label workspace 10 as key 0.
 workspace="${1:?workspace number required}"
-hyprctl activeworkspace -j | jq -c --arg id "$workspace" '
-  {text: $id, tooltip: ("Desktop " + $id),
-   class: (if (.id | tostring) == $id then "active" else "inactive" end)}
+hyprctl monitors -j | jq -c --argjson id "$workspace" '
+  {text: (if $id == 10 then "0" else ($id | tostring) end),
+   tooltip: ((if $id <= 5 then "Left" else "Right" end) + " monitor · Desktop " + ($id | tostring)),
+   class: (if any(.[]; .activeWorkspace.id == $id) then "active" else "inactive" end)}
 '

@@ -46,7 +46,7 @@ tooltip {
 tooltip label { padding: 8px 12px; }
 
 #distro-group, #storage, #system, #audio, #connections, #tray-group,
-#custom-power, #custom-idle, #custom-nightlight, #clock, #workspaces {
+#custom-power, #custom-idle, #custom-nightlight, #custom-ytmusic, #clock, #workspaces {
   margin: 4px 3px;
   background: linear-gradient(135deg, #111d32, #080e1c);
   border: 1px solid @outline_variant;
@@ -99,9 +99,42 @@ tooltip label { padding: 8px 12px; }
  * Illuminated Workspace Controls
  * ========================================================================== */
 #workspaces { padding: 6px; }
+/* Subscription quota, with warnings only as the remaining allowance runs low. */
+#custom-agent-usage {
+  margin: 4px 3px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #111d32, #080e1c);
+  border: 1px solid @outline_variant;
+  border-radius: 4px;
+  color: @primary;
+}
+#custom-agent-usage:hover { border-color: @primary; background: @surface_container_highest; }
+#custom-agent-usage.warning, #custom-agent-usage.stale { color: @tertiary_fixed; }
+#custom-agent-usage.critical { color: @error; }
+#custom-agent-usage.unavailable { color: @secondary_fixed_dim; }
+/* Compact now-playing strip between system information and the center controls. */
+#custom-ytmusic {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-bottom-color: @primary;
+}
+#custom-ytmusic.playing { color: @primary; }
+#custom-ytmusic.paused, #custom-ytmusic.idle { color: @secondary_fixed_dim; }
+#custom-ytmusic:hover { border-color: @primary; background: @surface_container_highest; }
+/* A compact output-audio waveform, colored cyan through magenta. */
+#custom-audio-wave {
+  margin: 4px 3px 4px 0;
+  padding: 3px 8px;
+  background: @surface_container;
+  border: 1px solid @outline_variant;
+  border-radius: 4px;
+  font-size: 13px;
+}
+#custom-audio-wave.playing { border-bottom-color: @tertiary; }
 /* Numbered workspace controls use Lua IPC on Hyprland 0.56+. */
 #custom-workspace1, #custom-workspace2, #custom-workspace3,
-#custom-workspace4, #custom-workspace5 {
+#custom-workspace4, #custom-workspace5, #custom-workspace6,
+#custom-workspace7, #custom-workspace8, #custom-workspace9, #custom-workspace10 {
   padding: 0 10px;
   color: @tertiary;
   border-radius: 3px;
@@ -109,7 +142,8 @@ tooltip label { padding: 8px 12px; }
   transition: all 180ms ease;
 }
 #custom-workspace1.active, #custom-workspace2.active, #custom-workspace3.active,
-#custom-workspace4.active, #custom-workspace5.active {
+#custom-workspace4.active, #custom-workspace5.active, #custom-workspace6.active,
+#custom-workspace7.active, #custom-workspace8.active, #custom-workspace9.active, #custom-workspace10.active {
   background: linear-gradient(120deg, #00e5ff, #759dff);
   color: @on_primary;
   font-weight: bold;
@@ -117,10 +151,12 @@ tooltip label { padding: 8px 12px; }
   box-shadow: 0 0 7px rgba(0, 229, 255, 0.45), inset 0 -2px @tertiary;
 }
 #custom-workspace1:hover, #custom-workspace2:hover, #custom-workspace3:hover,
-#custom-workspace4:hover, #custom-workspace5:hover {
+#custom-workspace4:hover, #custom-workspace5:hover, #custom-workspace6:hover,
+#custom-workspace7:hover, #custom-workspace8:hover, #custom-workspace9:hover, #custom-workspace10:hover {
   background: @surface_container_highest;
   color: @primary;
 }
+#custom-workspace-separator { padding: 0 8px; color: @secondary_fixed_dim; }
 #workspaces button {
   min-width: 25px;
   padding: 0 4px;
