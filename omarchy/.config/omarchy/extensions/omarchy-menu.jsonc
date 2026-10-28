@@ -32,4 +32,7 @@
   // instead of setting one image for every screen. Landscape screens use the
   // stock background, portrait screens use aphexlog.monitor-wallpaper.
   "style.background": {"icon": "", "label": "Background", "action": "wallpaper-monitor-pick"},
+
+  // Launch the Jolly Roger effects without changing the secure lock screen.
+  "system.screensaver": {"label": "Jolly Roger", "action": "\"$HOME/.local/bin/cyber-pirate-screensaver\" force"},
 }

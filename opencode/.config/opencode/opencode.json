@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "plugins": ["{env:HOME}/Code/dotfiles/opencode/.config/opencode/plugins/ttfx"],
   "theme": "system",
   "autoupdate": false,
   "instructions": [

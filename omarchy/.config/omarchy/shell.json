@@ -65,6 +65,20 @@
   "plugins": [
     {
       "id": "aphexlog.monitor-wallpaper"
+    },
+    {
+      "id": "aphexlog.lock"
+    },
+    {
+      "id": "aphexlog.idle"
     }
+  ],
+  "disabledPlugins": [
+    "omarchy.lock",
+    "omarchy.idle"
+  ],
+  "cloneSourceRestores": [
+    "aphexlog.lock",
+    "aphexlog.idle"
   ]
 }
