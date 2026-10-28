@@ -46,7 +46,7 @@ tooltip {
 tooltip label { padding: 8px 12px; }
 
 #distro-group, #storage, #system, #audio, #connections, #tray-group,
-#custom-power, #custom-idle, #custom-nightlight, #clock, #workspaces {
+#custom-power, #custom-desktop, #custom-idle, #custom-nightlight, #music, #clock, #workspaces {
   margin: 4px 3px;
   background: linear-gradient(135deg, #111d32, #080e1c);
   border: 1px solid @outline_variant;
@@ -63,7 +63,8 @@ tooltip label { padding: 8px 12px; }
 #disk, #memory, #temperature, #cpu, #bluetooth { margin-right: 2px; padding: 0 8px; }
 #network { padding: 0 10px 0 4px; }
 #pulseaudio { margin: 0 10px 0 8px; }
-#custom-power, #custom-idle, #custom-nightlight { padding: 6px 14px; }
+#custom-power, #custom-desktop, #custom-idle, #custom-nightlight { padding: 6px 14px; }
+#custom-desktop { color: @primary; border-color: rgba(0, 229, 255, 0.6); }
 #custom-notifications { padding: 6px 14px 6px 10px; color: @primary; }
 #tray { padding: 6px 10px; }
 #tray > .passive, #tray > .active, #tray > .needs-attention { -gtk-icon-effect: none; }
@@ -89,7 +90,7 @@ tooltip label { padding: 8px 12px; }
   color: @on_surface;
   text-shadow: 0 0 8px @primary;
 }
-#custom-power:hover, #custom-idle:hover, #custom-nightlight:hover, #clock:hover {
+#custom-power:hover, #custom-desktop:hover, #custom-idle:hover, #custom-nightlight:hover, #clock:hover {
   background: @surface_container_highest;
   border-color: @primary;
   box-shadow: inset 0 -2px @primary;
@@ -99,9 +100,58 @@ tooltip label { padding: 8px 12px; }
  * Illuminated Workspace Controls
  * ========================================================================== */
 #workspaces { padding: 6px; }
+/* Subscription quota, with warnings only as the remaining allowance runs low. */
+#custom-agent-usage {
+  margin: 4px 3px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #111d32, #080e1c);
+  border: 1px solid @outline_variant;
+  border-radius: 4px;
+  color: @primary;
+}
+#custom-agent-usage:hover { border-color: @primary; background: @surface_container_highest; }
+#custom-agent-usage.warning, #custom-agent-usage.stale { color: @tertiary_fixed; }
+#custom-agent-usage.critical { color: @error; }
+#custom-agent-usage.unavailable { color: @secondary_fixed_dim; }
+/* Clear icon-only music launchers; click an icon to expand its player. */
+#music { border-bottom-color: @primary; }
+#music:hover { border-color: @primary; background: @surface_container_highest; }
+#custom-ytmusic, #custom-apple-music {
+  padding: 3px 12px;
+  min-width: 24px;
+  font-size: 22px;
+}
+#custom-ytmusic { color: @primary; }
+#custom-ytmusic.playing { text-shadow: 0 0 8px @primary; }
+#custom-ytmusic:hover { color: @on_surface; }
+/* Apple Music shares the capsule, with a distinct magenta playback accent. */
+#custom-apple-music { color: @tertiary; border-left: 1px solid @outline_variant; }
+#custom-apple-music.playing { text-shadow: 0 0 8px @tertiary; }
+#custom-apple-music:hover { color: @on_surface; }
+/* A compact output-audio waveform, colored cyan through magenta. */
+#custom-audio-wave {
+  padding: 3px 10px 3px 8px;
+  border-left: 1px solid @outline_variant;
+  font-size: 13px;
+}
+/* Default microphone name and a matching live input waveform. */
+#custom-input-wave {
+  margin: 4px 3px;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #111d32, #080e1c);
+  border: 1px solid @outline_variant;
+  border-radius: 4px;
+  color: @secondary_fixed_dim;
+  font-size: 13px;
+}
+#custom-input-wave.active { color: @primary; border-bottom-color: @tertiary; }
+#custom-input-wave.muted { color: @error; }
+#custom-input-wave.unavailable { color: @outline_variant; }
+#custom-input-wave:hover { border-color: @primary; background: @surface_container_highest; }
 /* Numbered workspace controls use Lua IPC on Hyprland 0.56+. */
 #custom-workspace1, #custom-workspace2, #custom-workspace3,
-#custom-workspace4, #custom-workspace5 {
+#custom-workspace4, #custom-workspace5, #custom-workspace6,
+#custom-workspace7, #custom-workspace8, #custom-workspace9, #custom-workspace10 {
   padding: 0 10px;
   color: @tertiary;
   border-radius: 3px;
@@ -109,7 +159,8 @@ tooltip label { padding: 8px 12px; }
   transition: all 180ms ease;
 }
 #custom-workspace1.active, #custom-workspace2.active, #custom-workspace3.active,
-#custom-workspace4.active, #custom-workspace5.active {
+#custom-workspace4.active, #custom-workspace5.active, #custom-workspace6.active,
+#custom-workspace7.active, #custom-workspace8.active, #custom-workspace9.active, #custom-workspace10.active {
   background: linear-gradient(120deg, #00e5ff, #759dff);
   color: @on_primary;
   font-weight: bold;
@@ -117,10 +168,12 @@ tooltip label { padding: 8px 12px; }
   box-shadow: 0 0 7px rgba(0, 229, 255, 0.45), inset 0 -2px @tertiary;
 }
 #custom-workspace1:hover, #custom-workspace2:hover, #custom-workspace3:hover,
-#custom-workspace4:hover, #custom-workspace5:hover {
+#custom-workspace4:hover, #custom-workspace5:hover, #custom-workspace6:hover,
+#custom-workspace7:hover, #custom-workspace8:hover, #custom-workspace9:hover, #custom-workspace10:hover {
   background: @surface_container_highest;
   color: @primary;
 }
+#custom-workspace-separator { padding: 0 8px; color: @secondary_fixed_dim; }
 #workspaces button {
   min-width: 25px;
   padding: 0 4px;

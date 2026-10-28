@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "aphexlog.apple-music",
+  "name": "Apple Music Player",
+  "version": "1.0.0",
+  "author": "aphexlog",
+  "description": "Apple Music now playing and playback controls in the Omarchy and Waybar toolbars.",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "Widget.qml" },
+  "barWidget": {
+    "displayName": "Apple Music",
+    "description": "Click for the mini-player, right-click to play or pause, scroll to skip",
+    "category": "Media",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

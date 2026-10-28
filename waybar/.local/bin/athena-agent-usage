@@ -1,0 +1,158 @@
+#!/usr/bin/env python3
+"""Read Codex subscription limits through its supported app-server protocol."""
+import argparse
+import asyncio
+import fcntl
+import html
+import json
+import math
+import os
+from pathlib import Path
+import shutil
+import tempfile
+import time
+from datetime import datetime
+
+
+CACHE = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "athena-agent-usage"
+
+
+def window_label(minutes):
+    if minutes == 10080:
+        return "Weekly limit"
+    if minutes == 1440:
+        return "Daily limit"
+    if minutes and minutes % 60 == 0:
+        return f"{minutes // 60}-hour limit"
+    return f"{minutes}-minute limit" if minutes else "Usage limit"
+
+
+def normalize(result):
+    buckets = result.get("rateLimitsByLimitId") or {}
+    if not buckets and result.get("rateLimits"):
+        buckets = {"codex": result["rateLimits"]}
+    windows = []
+    plan = ""
+    for key, bucket in buckets.items():
+        plan = plan or bucket.get("planType") or ""
+        for field in ("primary", "secondary"):
+            window = bucket.get(field)
+            if not isinstance(window, dict):
+                continue
+            used = window.get("usedPercent")
+            if isinstance(used, bool) or not isinstance(used, (float, int)) or not math.isfinite(used):
+                continue
+            duration = window.get("windowDurationMins")
+            used = min(100, max(0, used))
+            label = window_label(duration)
+            if key != "codex":
+                label = f"{bucket.get('limitName') or key} · {label}"
+            windows.append({"label": label, "used": used, "remaining": 100 - used,
+                            "resetsAt": window.get("resetsAt"), "bucket": key})
+    if not windows:
+        raise ValueError("No subscription quota windows available")
+    return {"state": "ok", "updatedAt": int(time.time()), "plan": plan,
+            "remaining": min(w["remaining"] for w in windows), "windows": windows,
+            "resetCredits": (result.get("rateLimitResetCredits") or {}).get("availableCount", 0),
+            "message": "", "ordinaryUsageAllowed": result.get("ordinaryUsageAllowed")}
+
+
+async def fetch_limits():
+    executable = shutil.which("codex")
+    if not executable:
+        candidate = Path.home() / ".local/share/mise/installs/codex/latest/bin/codex"
+        if candidate.is_file():
+            executable = str(candidate)
+    if not executable:
+        raise RuntimeError("Codex CLI is not installed")
+    process = await asyncio.create_subprocess_exec(
+        executable, "app-server", "--listen", "stdio://",
+        stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.DEVNULL, cwd=str(CACHE))
+
+    async def send(value):
+        process.stdin.write((json.dumps(value) + "\n").encode())
+        await process.stdin.drain()
+
+    async def exchange():
+        await send({"id": 0, "method": "initialize", "params": {
+            "clientInfo": {"name": "athena_usage", "title": "Athena Usage", "version": "1.0.0"}}})
+        while line := await process.stdout.readline():
+            message = json.loads(line)
+            if message.get("id") == 0:
+                if "error" in message:
+                    raise RuntimeError("Codex initialization failed")
+                await send({"method": "initialized", "params": {}})
+                await send({"id": 1, "method": "account/rateLimits/read"})
+            elif message.get("id") == 1:
+                if "error" in message:
+                    raise RuntimeError("Could not read limits. Check your Codex sign-in or connection.")
+                return normalize(message["result"])
+        raise RuntimeError("Codex closed before returning usage")
+
+    try:
+        return await asyncio.wait_for(exchange(), 25)
+    finally:
+        if process.returncode is None:
+            process.terminate()
+            try:
+                await asyncio.wait_for(process.wait(), 3)
+            except asyncio.TimeoutError:
+                process.kill()
+                await process.wait()
+
+
+def load_status(force=False):
+    CACHE.mkdir(parents=True, exist_ok=True, mode=0o700)
+    cache = CACHE / "status.json"
+    # Both monitor bars and the popup share one request and one cache.
+    with (CACHE / "refresh.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        try:
+            previous = json.loads(cache.read_text())
+        except (OSError, ValueError):
+            previous = {}
+        now = int(time.time())
+        ttl = 10 if force else 300 if previous.get("state") == "ok" else 60
+        if previous and now - previous.get("checkedAt", 0) < ttl:
+            return previous
+        try:
+            status = asyncio.run(fetch_limits())
+        except (OSError, ValueError, RuntimeError, asyncio.TimeoutError):
+            status = {**previous, "state": "stale" if previous.get("windows") else "unavailable",
+                      "message": "Usage unavailable. Check your Codex sign-in or internet connection."}
+        status["checkedAt"] = now
+        with tempfile.NamedTemporaryFile(mode="w", dir=CACHE, delete=False) as temp:
+            json.dump(status, temp)
+            temporary = temp.name
+        os.replace(temporary, cache)
+        return status
+
+
+def waybar(status):
+    remaining = status.get("remaining")
+    state = status.get("state")
+    if state != "ok":
+        text = "󰚩 ~" + str(round(remaining)) + "%" if remaining is not None else "󰚩 —"
+        level = "stale" if remaining is not None else "unavailable"
+    else:
+        text = f"󰚩 {remaining:.0f}%"
+        level = "critical" if remaining <= 10 else "warning" if remaining <= 25 else "normal"
+    lines = ["Codex " + status.get("plan", "").title() + " · subscription quota remaining"]
+    if state != "ok":
+        lines.append(status.get("message", "Usage unavailable"))
+    for window in status.get("windows", []):
+        lines.append(f"{window['label']}: {window['remaining']:.0f}% left")
+        if window.get("resetsAt"):
+            lines.append("Resets " + datetime.fromtimestamp(window["resetsAt"]).strftime("%a %b %d, %I:%M %p"))
+    lines.append("Click for usage details")
+    return {"text": text, "class": level, "tooltip": html.escape("\n".join(lines))}
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--refresh", action="store_true")
+    parser.add_argument("--waybar", action="store_true")
+    args = parser.parse_args()
+    status = load_status(args.refresh)
+    print(json.dumps(waybar(status) if args.waybar else status))

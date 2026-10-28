@@ -15,12 +15,12 @@ return {
     dashboard.section.header.val = require("ascii_art.skullandaxe")
 
     dashboard.section.buttons.val = {
-      dashboard.button("f", "👽  Find Files", ":Telescope find_files <CR>"),
+      dashboard.button("f", "👽  Find Files", ":lua Snacks.picker.files()<CR>"),
       dashboard.button("e", "🎄  New File", ":ene <BAR> startinsert <CR>"),
-      dashboard.button("r", "🧙  Recent Files", ":Telescope oldfiles <CR>"),
-      dashboard.button("t", "🛸  Search Text", ":Telescope live_grep <CR>"),
+      dashboard.button("r", "🧙  Recent Files", ":lua Snacks.picker.recent()<CR>"),
+      dashboard.button("t", "🛸  Search Text", ":lua Snacks.picker.grep()<CR>"),
       dashboard.button("q", "🎃  Quit", ":qa<CR>"),
-      dashboard.button("c", "⚙️  Config", ":Telescope find_files cwd=~/.config/nvim <CR>"),
+      dashboard.button("c", "⚙️  Config", ":lua Snacks.picker.files({ cwd = vim.fn.stdpath('config') })<CR>"),
     }
 
     dashboard.section.footer.val = "Welcome home Aphexlog"

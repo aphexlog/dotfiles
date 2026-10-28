@@ -1,0 +1,19 @@
+{
+  "player.empty": "Open Apple Music, sign in, and play a song to connect the toolbar.",
+  "player.ready": "Ready to play",
+  "player.queue": "Queue",
+  "player.playing": "Playing",
+  "player.paused": "Paused",
+  "player.stopped": "Stopped",
+  "player.open": "Open Apple Music",
+  "player.close": "Close",
+  "player.previous": "Previous track",
+  "player.next": "Next track",
+  "player.play": "Play",
+  "player.pause": "Pause",
+  "player.controls": "Click: player · Right-click: play/pause · Scroll: skip",
+  "player.browser": "Playback follows Apple Music's active browser media session.",
+  "player.shuffle": "Shuffle",
+  "player.repeat": "Repeat",
+  "player.volume": "Volume"
+}

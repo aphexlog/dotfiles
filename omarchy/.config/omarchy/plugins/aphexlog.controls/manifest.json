@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "aphexlog.controls",
+  "name": "Desktop Controls",
+  "version": "1.0.0",
+  "author": "aphexlog",
+  "description": "Workspace, window, display, and quick desktop controls",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "Controls.qml" },
+  "barWidget": {
+    "displayName": "Desktop Controls",
+    "description": "Control windows, workspaces, monitors, and desktop settings",
+    "category": "System",
+    "allowMultiple": false
+  }
+}

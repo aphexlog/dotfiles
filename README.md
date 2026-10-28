@@ -37,7 +37,7 @@ plugins can be installed with `brew install zsh-autosuggestions zsh-syntax-highl
 - **foot** - Foot terminal settings, including font size and key bindings
 - **hypr** - Current Omarchy/Hyprland user configuration, including monitor and trackpad settings
 - **omarchy** - Omarchy shell config: per-monitor wallpaper service, picker, and menu override
-- **opencode** - OpenCode settings, agents, commands, and persistent instructions
+- **opencode** - OpenCode settings, agents, commands, persistent instructions, and a [global ttfx animation tool](opencode/.config/opencode/plugins/ttfx/README.md)
 - **local-llm** - Local-model scripts, manifest, inventory, and user service; no weights or binaries
 - **steam** - Steam desktop launcher with explicit 1× application scaling
 - **waybar** - Athena-inspired floating bar with Omarchy controls ([setup](waybar/README.md))

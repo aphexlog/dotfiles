@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+"""Snapshot the clicked output/position before invoking a shell popup."""
+import json
+import subprocess
+import sys
+
+
+def query(*args):
+    return json.loads(subprocess.check_output(["hyprctl", *args, "-j"], timeout=3))
+
+
+def monitor_at(cursor, monitors):
+    for monitor in monitors:
+        width, height = monitor["width"], monitor["height"]
+        if monitor.get("transform", 0) % 2:
+            width, height = height, width
+        width, height = width / monitor["scale"], height / monitor["scale"]
+        if (monitor["x"] <= cursor["x"] < monitor["x"] + width
+                and monitor["y"] <= cursor["y"] < monitor["y"] + height):
+            return monitor
+    raise RuntimeError("No output under the pointer")
+
+
+def main():
+    if len(sys.argv) < 3:
+        raise SystemExit("Usage: cyber-bar-popup <IPC target> <method> [args...]")
+    cursor = query("cursorpos")
+    monitor = monitor_at(cursor, query("monitors"))
+    edge = "bottom" if monitor["description"] == "LG Electronics LG HDR 4K 0x0005CD72" else "top"
+    subprocess.run([
+        "omarchy-shell", "cyber-bar", "configure", str(cursor["x"] - monitor["x"]),
+        monitor["name"], edge,
+    ], check=True, timeout=5)
+    subprocess.run(["omarchy-shell", *sys.argv[1:]], check=True, timeout=10)
+
+
+if __name__ == "__main__":
+    main()

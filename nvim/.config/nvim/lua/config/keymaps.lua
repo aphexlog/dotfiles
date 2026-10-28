@@ -1,11 +1,11 @@
 local map = LazyVim.safe_keymap_set
 
--- Telescope keymaps
-map("n", "<leader>t", "<Nop>", { desc = "Telescope" })
-map("n", "<leader>tt", ":TodoTelescope<CR>", { noremap = true, silent = true })
-map("n", "<leader>tf", ":Telescope find_files<CR>", { noremap = true, silent = true })
-map("n", "<leader>tg", ":Telescope live_grep<CR>", { noremap = true, silent = true })
-map("n", "<leader>tb", ":Telescope buffers<CR>", { noremap = true, silent = true })
+-- Picker keymaps
+map("n", "<leader>t", "<Nop>", { desc = "Pickers" })
+map("n", "<leader>tt", function() Snacks.picker.todo_comments() end, { desc = "Todo" })
+map("n", "<leader>tf", function() Snacks.picker.files() end, { desc = "Find Files" })
+map("n", "<leader>tg", function() Snacks.picker.grep() end, { desc = "Search Text" })
+map("n", "<leader>tb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
 
 -- jump windows with Ctrl + h/j/k/l
 map("n", "<C-h>", ":wincmd h<CR>", { noremap = true, silent = true })

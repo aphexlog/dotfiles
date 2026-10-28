@@ -34,6 +34,23 @@ require("default.hypr.toggles")
 -- Add any other personal Hyprland configuration below.
 -- o.window("qemu", { workspace = "5" })
 
+-- ##############################################################################
+-- # Cyber Scratchpad Terminal
+-- ##############################################################################
+
+-- A separate special workspace preserves the shell when the terminal is hidden.
+o.window("^cyber-scratch$", {
+  workspace = "special:cyber-terminal silent",
+  tag = "+terminal",
+  float = true,
+  size = { "monitor_w*0.72", "monitor_h*0.58" },
+  center = true,
+  rounding = 10,
+  border_size = 2,
+  border_color = { colors = { "rgb(00e5ff)", "rgb(f072ff)" }, angle = 45 },
+  opacity = "1.0 override 1.0 override",
+})
+
 -- WezTerm's Linux app-id differs from the class in Omarchy's terminal defaults.
 -- The terminal tag makes universal Super+C/V send Ctrl/Shift+Insert.
 o.window("^org\\.wezfurlong\\.wezterm$", { tag = "+terminal" })

@@ -15,6 +15,33 @@
 -- Add a new binding.
 -- o.bind("SUPER + SHIFT + R", "SSH", "alacritty -e ssh your-server")
 
+-- Summon the keyboard-navigable Chrono calendar.
+o.bind("SUPER + ALT + C", "Chrono calendar", "omarchy-shell shell toggle aphexlog.clock")
+
+-- Open OLauncher directly in Apps.
+hl.unbind("SUPER + SPACE")
+o.bind("SUPER + SPACE", "OLauncher", [[omarchy-shell shell toggle olauncher '{"filter":"apps"}']])
+o.bind("ALT + SPACE", "OLauncher", [[omarchy-shell shell toggle olauncher '{"filter":"apps"}']])
+
+-- Drag a screenshot region and copy it directly to the clipboard.
+o.bind("SUPER + CTRL + SHIFT + 4", "Region screenshot to clipboard", "omarchy capture screenshot region copy")
+
+-- Replace move-to-workspace-5 with region recording; press again to finish.
+hl.unbind("SUPER + SHIFT + code:14")
+hl.unbind("SUPER + SHIFT + 5")
+o.bind("SUPER + SHIFT + 5", "Region recording to clipboard", "$HOME/.local/bin/record-region-clipboard")
+
+-- Replace Calculator with the requested lock shortcut.
+hl.unbind("SUPER + CTRL + Q")
+o.bind("SUPER + CTRL + Q", "Lock computer", "omarchy system lock")
+
+-- ##############################################################################
+-- # Cyber Scratchpad Terminal
+-- ##############################################################################
+
+-- Show/hide a persistent terminal above the current workspace.
+o.bind("SUPER + GRAVE", "Cyber scratchpad terminal", "$HOME/.local/bin/cyber-scratchpad")
+
 -- Change an existing binding by unbinding it first, then binding the key again.
 -- This example changes SUPER+SPACE from the launcher to the Omarchy root menu.
 -- hl.unbind("SUPER + SPACE")
@@ -37,14 +64,15 @@ hl.unbind("SUPER + SHIFT + SPACE")
 o.bind("SUPER + SHIFT + SPACE", "Toggle top bar", "$HOME/.local/bin/athena-bar toggle")
 
 -- ##############################################################################
--- # Programmatic Display Configuration Only
+-- # Desktop Controls
 -- ##############################################################################
 
--- Disable display settings, scaling, output toggling, and mirroring shortcuts.
--- Edit ~/.config/hypr/monitors-local.lua or use hyprctl instead.
+-- Open the desktop control center (previously disabled display settings).
+o.rebind("SUPER + CTRL + D", "Desktop controls", "omarchy-shell shell toggle aphexlog.controls")
+
+-- Keep scaling and output changes in the panel, where their targets are visible.
 hl.unbind("SUPER + SLASH")
 hl.unbind("SUPER + ALT + SLASH")
-hl.unbind("SUPER + CTRL + D")
 hl.unbind("SUPER + CTRL + Delete")
 hl.unbind("SUPER + CTRL + ALT + Delete")
 
@@ -110,9 +138,21 @@ o.bind("SUPER + mouse:272", "Move window or resize near an edge", function()
       or y <= grab or y >= size.y - grab
 
     if near_window and near_edge then
-      action = hl.dsp.window.resize()
+      action = hl.dsp.window.resize({ keep_aspect_ratio = false })
     end
   end
 
   hl.dispatch(action)
 end)
+
+-- Start interactive resizing from the pointer's current position.
+o.rebind("SUPER + mouse:273", "Resize window", function()
+  hl.dispatch(hl.dsp.window.resize({ keep_aspect_ratio = false }))
+end)
+
+-- Dictation keys from before Alt + Space and Right Alt became the defaults.
+-- Remove these lines to give the keys back to applications.
+if o.dictation_installed and o.dictation_installed() then
+  o.bind("SUPER + CTRL + X", "Toggle dictation", "omarchy-dictation toggle")
+  o.bind_hold("F9", "Start dictation (push-to-talk)", "omarchy-dictation start", "Stop dictation (push-to-talk)", "omarchy-dictation stop")
+end

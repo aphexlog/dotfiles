@@ -7,11 +7,11 @@
   "bar": {
     "position": "top",
     "transparent": false,
-    "centerAnchor": "omarchy.clock",
+    "centerAnchor": "aphexlog.clock",
     "layout": {
       "left": [
         {
-          "id": "omarchy.menu"
+          "id": "aphexlog.menu"
         },
         {
           "id": "omarchy.workspaces"
@@ -22,10 +22,13 @@
           "id": "omarchy.indicators"
         },
         {
-          "id": "omarchy.clock",
+          "id": "aphexlog.clock",
           "format": "dddd HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "verticalFormat": "HH\n—\nmm"
+        },
+        {
+          "id": "omarchy.elsewhen"
         },
         {
           "id": "omarchy.keyboard-layout"
@@ -39,6 +42,18 @@
       ],
       "right": [
         {
+          "id": "aphexlog.hud"
+        },
+        {
+          "id": "aphexlog.usage"
+        },
+        {
+          "id": "dqckey.ytmusic-player"
+        },
+        {
+          "id": "aphexlog.apple-music"
+        },
+        {
           "id": "omarchy.tray"
         },
         {
@@ -48,23 +63,48 @@
           "id": "omarchy.agents"
         },
         {
-          "id": "omarchy.bluetooth"
+          "id": "aphexlog.bluetooth"
         },
         {
-          "id": "omarchy.network"
+          "id": "aphexlog.network"
         },
         {
-          "id": "omarchy.audio"
+          "id": "aphexlog.audio"
         },
         {
-          "id": "omarchy.power"
+          "id": "aphexlog.power"
         }
       ]
-    }
+    },
+    "id": "aphexlog.bar"
   },
   "plugins": [
     {
       "id": "aphexlog.monitor-wallpaper"
+    },
+    {
+      "id": "aphexlog.lock"
+    },
+    {
+      "id": "aphexlog.idle"
+    },
+    {
+      "id": "aphexlog.notifications"
+    },
+    {
+      "id": "olauncher"
     }
+  ],
+  "disabledPlugins": [
+    "omarchy.lock",
+    "omarchy.idle",
+    "omarchy.notifications",
+    "omarchy.menu"
+  ],
+  "cloneSourceRestores": [
+    "aphexlog.lock",
+    "aphexlog.idle",
+    "aphexlog.notifications",
+    "aphexlog.menu"
   ]
 }

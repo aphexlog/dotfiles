@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "aphexlog.hud",
+  "name": "Cyber Notification History",
+  "version": "1.0.0",
+  "author": "aphexlog",
+  "description": "Anchored notification history and shared cyberpunk popup components",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "Notifications.qml" },
+  "barWidget": {
+    "displayName": "Cyber Notifications",
+    "category": "System",
+    "allowMultiple": false
+  }
+}

@@ -1,0 +1,124 @@
+#!/usr/bin/env python3
+"""Show the default microphone and live levels; never save or transmit audio."""
+
+import collections
+import html
+import json
+import math
+import os
+import select
+import signal
+import struct
+import subprocess
+import time
+
+
+##############################################################################
+# Input Discovery and Display
+##############################################################################
+
+COLORS = ["#00e5ff", "#32d2ff", "#64bfff", "#96acff", "#c899ff", "#f072ff"]
+
+
+def source_info():
+    """Follow the default input, excluding output-monitor sources."""
+    try:
+        name = subprocess.check_output(
+            ["pactl", "get-default-source"], text=True, timeout=2,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+        sources = json.loads(subprocess.check_output(
+            ["pactl", "-f", "json", "list", "sources"], text=True, timeout=2,
+            stderr=subprocess.DEVNULL,
+        ))
+        return next((s for s in sources if s["name"] == name
+                     and not s.get("monitor_source")), None)
+    except (OSError, subprocess.SubprocessError, ValueError):
+        return None
+
+
+def emit(source, levels):
+    muted = bool(source and source.get("mute"))
+    description = source.get("description", source["name"]) if source else "No input"
+    label = source.get("properties", {}).get("device.description", description) if source else description
+    label = label if len(label) <= 18 else label[:17] + "…"
+    active = source and not muted and any(levels)
+    wave = "".join('<span foreground="{}">{}</span>'.format(
+        COLORS[i] if active else "#25485e", "▁▂▃▄▅▆▇█"[level])
+        for i, level in enumerate(levels))
+    state = "unavailable" if not source else "muted" if muted else "active" if active else "idle"
+    print(json.dumps({
+        "text": ("" if muted or not source else "") + "  " + html.escape(label) + "  " + wave,
+        "class": state,
+        "tooltip": html.escape(description) + (" · Muted" if muted else "")
+        + "\nLive microphone levels · Audio is never saved"
+        + "\nClick: audio settings · Right-click: mute/unmute",
+    }), flush=True)
+
+
+##############################################################################
+# Live Meter and Process Cleanup
+##############################################################################
+
+def stop(_signum, _frame):
+    raise SystemExit(0)
+
+
+def main():
+    signal.signal(signal.SIGTERM, stop)
+    signal.signal(signal.SIGINT, stop)
+    while True:
+        source = source_info()
+        levels = collections.deque([0] * len(COLORS), maxlen=len(COLORS))
+        emit(source, levels)
+        if not source or source.get("mute"):
+            time.sleep(2)
+            continue
+        proc = subprocess.Popen(
+            ["parec", "--device=" + source["name"], "--format=s16le",
+             "--rate=8000", "--channels=1", "--latency-msec=60",
+             "--client-name=Cyber microphone waveform"],
+            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+        )
+        try:
+            pending = b""
+            refresh_at = time.monotonic() + 2
+            while True:
+                if time.monotonic() >= refresh_at:
+                    updated = source_info()
+                    if not updated or updated["name"] != source["name"] or updated.get("mute"):
+                        break
+                    source = updated
+                    refresh_at = time.monotonic() + 2
+                if not select.select([proc.stdout], [], [], 0.25)[0]:
+                    continue
+                data = os.read(proc.stdout.fileno(), 2048)
+                if not data:
+                    break
+                data = pending + data
+                pending = data[len(data) // 2 * 2:]
+                data = data[:len(data) // 2 * 2]
+                if not data:
+                    continue
+                samples = struct.unpack("<{}h".format(len(data) // 2), data)
+                rms = math.sqrt(sum(x * x for x in samples) / len(samples)) / 32768
+                level = max(0, min(7, round((20 * math.log10(max(rms, 1e-6)) + 55) / 6)))
+                levels.append(level)
+                emit(source, levels)
+        finally:
+            proc.terminate()
+            try:
+                proc.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                proc.wait()
+            proc.stdout.close()
+        time.sleep(0.2)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except BrokenPipeError:
+        # Waybar closes its stream on reload; do not leave a capture behind.
+        os.dup2(os.open(os.devnull, os.O_WRONLY), 1)

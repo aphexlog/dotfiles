@@ -1,0 +1,4 @@
+singleton Context 1.0 Context.qml
+Frame 1.0 Frame.qml
+KeyboardPanel 1.0 KeyboardPanel.qml
+PopupCard 1.0 PopupCard.qml
