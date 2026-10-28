@@ -1,0 +1,221 @@
+// Shared Athena-inspired Waybar settings for both monitors.
+// Original design: Muhammad Haikal Hakim, https://github.com/haikal-hakim/athena
+{
+  "layer": "top",
+  "position": "top",
+  "height": 42,
+  "spacing": 6,
+  "margin-top": 4,
+  "margin-left": 4,
+  "margin-right": 4,
+  "fixed-center": true,
+  "reload_style_on_change": true,
+  "modules-left": ["group/distro-group", "group/storage", "group/system", "custom/ytmusic", "custom/audio-wave"],
+  "modules-center": ["custom/power", "group/workspaces", "custom/idle", "custom/nightlight"],
+  "modules-right": ["custom/agent-usage", "group/audio", "group/connections", "clock", "group/tray-group"],
+
+  // ============================================================================
+  // Rounded Groups and Hover Drawers
+  // ============================================================================
+  "group/distro-group": {
+    "orientation": "horizontal",
+    "drawer": { "transition-duration": 400, "transition-left-to-right": true },
+    "modules": ["custom/distro", "custom/terminal", "custom/editor", "custom/files", "custom/browser"]
+  },
+  "group/storage": {
+    "orientation": "horizontal",
+    "modules": ["disk", "memory"]
+  },
+  "group/system": {
+    "orientation": "horizontal",
+    "modules": ["temperature", "cpu"]
+  },
+  "group/audio": {
+    "orientation": "horizontal",
+    "drawer": { "transition-duration": 400, "transition-left-to-right": false },
+    "modules": ["pulseaudio", "pulseaudio/slider", "pulseaudio#microphone"]
+  },
+  "group/connections": {
+    "orientation": "horizontal",
+    "drawer": { "transition-duration": 400, "transition-left-to-right": false },
+    "modules": ["network", "bluetooth"]
+  },
+  "group/tray-group": {
+    "orientation": "horizontal",
+    "drawer": { "transition-duration": 400, "transition-left-to-right": false },
+    "modules": ["custom/notifications", "tray"]
+  },
+
+  // ============================================================================
+  // Omarchy Launchers and Controls
+  // ============================================================================
+  // Open the YouTube Music shell plugin from the visible Waybar.
+  "custom/audio-wave": {
+    "exec": "$HOME/.local/bin/cyber-audio-wave",
+    "return-type": "json",
+    "restart-interval": 3,
+    "exec-on-event": false,
+    "on-click": "omarchy-shell athena-panels toggle dqckey.ytmusic-player"
+  },
+  "custom/ytmusic": {
+    "exec": "jq -c 'if .connected and ((now - .ts) < 30) then {text: ((if .playing then \"󰏤  \" else \"󰐊  \" end) + (.title // \"YouTube Music\")), tooltip: ((.title // \"YouTube Music\") + \" — \" + (.artist // \"\") + \"\\nClick: player · Right-click: play/pause\"), class: (if .playing then \"playing\" else \"paused\" end)} else {text: \"󰐌  YouTube Music\", class: \"idle\"} end' \"${XDG_STATE_HOME:-$HOME/.local/state}/ytmusic-player/state.json\" 2>/dev/null || printf '%s\\n' '{\"text\":\"󰐌  YouTube Music\",\"class\":\"idle\"}'",
+    "return-type": "json",
+    "interval": 2,
+    "escape": true,
+    "max-length": 28,
+    "on-click": "omarchy-shell athena-panels toggle dqckey.ytmusic-player",
+    "on-click-right": "omarchy-shell ytmusic-player-media toggle"
+  },
+  "custom/agent-usage": {
+    "exec": "python3 $HOME/.local/bin/athena-agent-usage --waybar",
+    "return-type": "json",
+    "interval": 30,
+    "exec-on-event": false,
+    "on-click": "omarchy-shell athena-panels toggle aphexlog.usage"
+  },
+  "custom/distro": {
+    "format": "",
+    "tooltip-format": "Omarchy menu · Right-click for apps",
+    "on-click": "omarchy-shell shell toggle aphexlog.menu '{\"initialMenu\":\"root\",\"fromBar\":true}'",
+    "on-click-right": "omarchy-shell shell toggle aphexlog.menu '{\"initialMenu\":\"apps\",\"fromBar\":true}'"
+  },
+  "custom/terminal": { "format": "󰆍", "tooltip-format": "Terminal", "on-click": "omarchy launch terminal" },
+  "custom/editor": { "format": "󰈮", "tooltip-format": "Editor", "on-click": "omarchy launch editor" },
+  "custom/files": { "format": "", "tooltip-format": "Files", "on-click": "omarchy launch nautilus" },
+  "custom/browser": { "format": "󰖟", "tooltip-format": "Browser", "on-click": "omarchy launch browser" },
+  "custom/power": {
+    "format": "󰐥",
+    "tooltip-format": "Power settings · Right-click for system menu",
+    "on-click": "omarchy-shell athena-panels toggle omarchy.power",
+    "on-click-right": "omarchy-shell shell toggle aphexlog.menu '{\"initialMenu\":\"system\",\"fromBar\":true}'"
+  },
+  // Show the current screen temperature mode; clicking toggles night light.
+  "custom/nightlight": {
+    "exec": "omarchy toggle nightlight --status | jq -c 'if .enabled then {text: \"󰖔\", class: \"enabled\", tooltip: \"Night light on · Click for day mode\"} else {text: \"󰖙\", class: \"disabled\", tooltip: \"Day mode · Click for night light\"} end'",
+    "return-type": "json",
+    "interval": 3,
+    "on-click": "omarchy toggle nightlight"
+  },
+  "custom/idle": {
+    "exec": "$HOME/.local/bin/athena-bar idle-status",
+    "return-type": "json",
+    "interval": 5,
+    "on-click": "omarchy toggle idle"
+  },
+  "custom/notifications": {
+    "exec": "$HOME/.local/bin/athena-bar notifications-status",
+    "return-type": "json",
+    "interval": 10,
+    "on-click": "omarchy-shell notifications showHistory",
+    "on-click-right": "omarchy-shell notifications toggleDnd"
+  },
+
+  // ============================================================================
+  // Monitor Workspace Groups and App Icons
+  // ============================================================================
+  // Hyprland 0.56 requires Lua dispatch; Waybar's native buttons use legacy IPC.
+  // Left monitor: 1–5. Right monitor: 6–0 (workspace 10).
+  "group/workspaces": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/workspace1", "custom/workspace2", "custom/workspace3", "custom/workspace4", "custom/workspace5",
+      "custom/workspace-separator",
+      "custom/workspace6", "custom/workspace7", "custom/workspace8", "custom/workspace9", "custom/workspace10"
+    ]
+  },
+  "custom/workspace1": { "exec": "$HOME/.local/bin/athena-workspace-status 1", "return-type": "json", "interval": 1, "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"1\" })'" },
+  "custom/workspace2": { "exec": "$HOME/.local/bin/athena-workspace-status 2", "return-type": "json", "interval": 1, "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"2\" })'" },
+  "custom/workspace3": { "exec": "$HOME/.local/bin/athena-workspace-status 3", "return-type": "json", "interval": 1, "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"3\" })'" },
+  "custom/workspace4": { "exec": "$HOME/.local/bin/athena-workspace-status 4", "return-type": "json", "interval": 1, "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"4\" })'" },
+  "custom/workspace5": { "exec": "$HOME/.local/bin/athena-workspace-status 5", "return-type": "json", "interval": 1, "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"5\" })'" },
+  "custom/workspace-separator": { "format": "··", "tooltip-format": "Left monitor: 1–5 · Right monitor: 6–0" },
+  "custom/workspace6": { "exec": "$HOME/.local/bin/athena-workspace-status 6", "return-type": "json", "interval": 1, "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"6\" })'" },
+  "custom/workspace7": { "exec": "$HOME/.local/bin/athena-workspace-status 7", "return-type": "json", "interval": 1, "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"7\" })'" },
+  "custom/workspace8": { "exec": "$HOME/.local/bin/athena-workspace-status 8", "return-type": "json", "interval": 1, "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"8\" })'" },
+  "custom/workspace9": { "exec": "$HOME/.local/bin/athena-workspace-status 9", "return-type": "json", "interval": 1, "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"9\" })'" },
+  "custom/workspace10": { "exec": "$HOME/.local/bin/athena-workspace-status 10", "return-type": "json", "interval": 1, "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"10\" })'" },
+  "hyprland/workspaces": {
+    "format": "{icon} {windows}",
+    "persistent-workspaces": { "*": 5 },
+    "all-outputs": false,
+    "show-special": true,
+    "window-rewrite-default": "󰊠",
+    "window-rewrite": {
+      "kitty": "󰆍",
+      "com.mitchellh.ghostty": "󰆍",
+      "Alacritty": "󰆍",
+      "foot": "󰆍",
+      "firefox": "",
+      "chromium": "",
+      "brave-browser": "",
+      "code": "󰨞",
+      "dev.zed.Zed": "󰈮",
+      "obsidian": "󰹕",
+      "org.gnome.Nautilus": "",
+      "thunar": "",
+      "Spotify": "",
+      "discord": "",
+      "org.telegram.desktop": ""
+    },
+    "format-icons": { "active": "󰮯", "special": "󱁂", "default": "󰊠", "urgent": "󰧵", "empty": "" }
+  },
+
+  // ============================================================================
+  // System, Connectivity, and Audio
+  // ============================================================================
+  "disk": { "path": "/", "interval": 60, "format": "󰋊", "tooltip-format": "Disk: {used} / {total}", "on-click": "omarchy launch tui btop" },
+  "memory": { "interval": 10, "format": "󰍛", "tooltip-format": "RAM: {used:0.1f} / {total:0.1f} GiB", "on-click": "omarchy launch tui btop" },
+  "cpu": { "interval": 5, "format": "󰻠", "tooltip-format": "CPU: {usage}%", "on-click": "omarchy launch tui btop" },
+  "temperature": {
+    "thermal-zone": 0,
+    "interval": 10,
+    "critical-threshold": 85,
+    "format": "{icon}",
+    "format-icons": ["", "", ""],
+    "tooltip-format": "System temperature: {temperatureC}°C"
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "",
+    "format-icons": { "headphone": "󰋋", "headset": "󰋋", "default": ["", "", ""] },
+    "tooltip-format": "Output: {volume}% · Click for audio settings",
+    "on-click": "omarchy-shell athena-panels toggle omarchy.audio",
+    "on-click-right": "omarchy audio output volume mute-toggle",
+    "on-scroll-up": "omarchy audio output volume +2",
+    "on-scroll-down": "omarchy audio output volume -2",
+    "scroll-step": 2
+  },
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": "",
+    "format-source-muted": "",
+    "on-click": "omarchy audio input mute"
+  },
+  "pulseaudio/slider": { "min": 0, "max": 100, "orientation": "horizontal" },
+  "network": {
+    // Keep the button icon-only; network details remain in its tooltip.
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰤭",
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "tooltip-format-wifi": "{essid} · {signalStrength}%\n{ipaddr}",
+    "tooltip-format-ethernet": "{ifname}\n{ipaddr}",
+    "tooltip-format-disconnected": "Disconnected · Click for Omarchy network settings",
+    "on-click": "omarchy-shell athena-panels toggle omarchy.network"
+  },
+  "bluetooth": {
+    "format": "󰂯",
+    "format-connected": "󰂱",
+    "format-disabled": "󰂲",
+    "tooltip-format": "Bluetooth: {status}",
+    "on-click": "omarchy-shell athena-panels toggle omarchy.bluetooth"
+  },
+  "clock": {
+    "format": "󰃱  {:%I:%M %p}",
+    "format-alt": "󰃱  {:%a %d %b}",
+    "tooltip-format": "{:%A, %B %d, %Y}\nClick for Chrono calendar · Right-click to change clock format",
+    "on-click": "omarchy-shell athena-panels toggle aphexlog.clock",
+    "format-alt-click": 3
+  },
+  "tray": { "icon-size": 16, "spacing": 10, "show-passive-items": true }
+}

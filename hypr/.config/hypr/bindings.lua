@@ -15,6 +15,16 @@
 -- Add a new binding.
 -- o.bind("SUPER + SHIFT + R", "SSH", "alacritty -e ssh your-server")
 
+-- Summon the keyboard-navigable Chrono calendar.
+o.bind("SUPER + ALT + C", "Chrono calendar", "omarchy-shell shell toggle aphexlog.clock")
+
+-- ##############################################################################
+-- # Cyber Scratchpad Terminal
+-- ##############################################################################
+
+-- Show/hide a persistent terminal above the current workspace.
+o.bind("SUPER + GRAVE", "Cyber scratchpad terminal", "$HOME/.local/bin/cyber-scratchpad")
+
 -- Change an existing binding by unbinding it first, then binding the key again.
 -- This example changes SUPER+SPACE from the launcher to the Omarchy root menu.
 -- hl.unbind("SUPER + SPACE")
