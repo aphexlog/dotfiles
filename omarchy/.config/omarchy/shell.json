@@ -42,6 +42,9 @@
       ],
       "right": [
         {
+          "id": "aphexlog.flightdeck"
+        },
+        {
           "id": "aphexlog.hud"
         },
         {
@@ -52,6 +55,9 @@
         },
         {
           "id": "aphexlog.apple-music"
+        },
+        {
+          "id": "aphexlog.cliamp"
         },
         {
           "id": "omarchy.tray"

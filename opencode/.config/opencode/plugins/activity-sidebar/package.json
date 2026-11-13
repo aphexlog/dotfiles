@@ -1,0 +1,9 @@
+{
+  "name": "opencode-activity-sidebar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tui": "./tui.js"
+  }
+}

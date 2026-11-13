@@ -3,14 +3,14 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 42,
+  "height": 46,
   "spacing": 6,
   "margin-top": 4,
   "margin-left": 4,
   "margin-right": 4,
   "fixed-center": true,
   "reload_style_on_change": true,
-  "modules-left": ["group/distro-group", "group/storage", "group/system", "group/music"],
+  "modules-left": ["group/distro-group", "custom/flightdeck", "group/storage", "group/system", "group/music"],
   "modules-center": ["custom/power", "custom/desktop", "group/workspaces", "custom/idle", "custom/nightlight"],
   "modules-right": ["custom/input-wave", "custom/agent-usage", "group/audio", "group/connections", "clock", "group/tray-group"],
 
@@ -35,15 +35,15 @@
     "drawer": { "transition-duration": 400, "transition-left-to-right": false },
     "modules": ["pulseaudio", "pulseaudio/slider", "pulseaudio#microphone"]
   },
-  // Keep both music players and the output waveform in one connected capsule.
+  // Keep music players and the output waveform in one connected capsule.
   "group/music": {
     "orientation": "horizontal",
-    "modules": ["custom/ytmusic", "custom/apple-music", "custom/audio-wave"]
+    "modules": ["custom/ytmusic", "custom/apple-music", "custom/cliamp", "custom/audio-wave"]
   },
   "group/connections": {
     "orientation": "horizontal",
     "drawer": { "transition-duration": 400, "transition-left-to-right": false },
-    "modules": ["network", "bluetooth"]
+    "modules": ["network", "custom/omdrop", "bluetooth"]
   },
   "group/tray-group": {
     "orientation": "horizontal",
@@ -54,6 +54,25 @@
   // ============================================================================
   // Omarchy Launchers and Controls
   // ============================================================================
+  // Open Omdrop's native panel from the visible bar; highlight while receiving.
+  "custom/omdrop": {
+    "format": "󰇚",
+    "exec": "omdrop status --json | jq -c '{text: \"AirDrop\", class: (if .receiving then \"receiving\" else \"idle\" end), tooltip: (\"AirDrop · \" + .name + \"\\n\" + (if .receiving then \"Receiving enabled\" else \"Receiving off\" end) + \"\\nClick for Omdrop · Right-click to toggle for 10 minutes\")}'",
+    "return-type": "json",
+    "interval": 10,
+    "escape": true,
+    "on-click": "$HOME/.local/bin/cyber-bar-popup athena-panels toggle netmojo.omdrop",
+    "on-click-right": "omdrop toggle 10m"
+  },
+  // A dedicated focus timer, with one countdown shared across both bars.
+  "custom/flightdeck": {
+    "exec": "python3 $HOME/.local/bin/cyber-flightdeck --watch",
+    "return-type": "json",
+    "restart-interval": 3,
+    "exec-on-event": false,
+    "escape": true,
+    "on-click": "$HOME/.local/bin/cyber-bar-popup athena-panels toggle aphexlog.flightdeck"
+  },
   // One-click desktop controls, with the same backend exposed to OpenCode.
   "custom/desktop": {
     "format": "󰒓",
@@ -91,6 +110,19 @@
     "on-click-middle": "omarchy-shell apple-music-player launch",
     "on-scroll-up": "omarchy-shell apple-music-player previous",
     "on-scroll-down": "omarchy-shell apple-music-player next"
+  },
+  // Cliamp's native media session supplies track details and playback controls.
+  "custom/cliamp": {
+    "format": "",
+    "exec": "omarchy-shell cliamp-player status 2>/dev/null || printf '%s\\n' '{\"text\":\"Cliamp\",\"tooltip\":\"Cliamp\\nClick to expand player\",\"class\":\"idle\"}'",
+    "return-type": "json",
+    "interval": 2,
+    "escape": true,
+    "on-click": "$HOME/.local/bin/cyber-bar-popup athena-panels toggle aphexlog.cliamp",
+    "on-click-right": "omarchy-shell cliamp-player toggle",
+    "on-click-middle": "omarchy-shell cliamp-player launch",
+    "on-scroll-up": "omarchy-shell cliamp-player previous",
+    "on-scroll-down": "omarchy-shell cliamp-player next"
   },
   "custom/agent-usage": {
     "exec": "python3 $HOME/.local/bin/athena-agent-usage --waybar",

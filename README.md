@@ -39,6 +39,7 @@ plugins can be installed with `brew install zsh-autosuggestions zsh-syntax-highl
 - **omarchy** - Omarchy shell config: per-monitor wallpaper service, picker, and menu override
 - **opencode** - OpenCode settings, agents, commands, persistent instructions, and a [global ttfx animation tool](opencode/.config/opencode/plugins/ttfx/README.md)
 - **local-llm** - Local-model scripts, manifest, inventory, and user service; no weights or binaries
+- **obs** - PhxCast Cyberpunk theme, XWayland launcher, and browser startup workaround ([setup](obs/README.md))
 - **steam** - Steam desktop launcher with explicit 1× application scaling
 - **waybar** - Athena-inspired floating bar with Omarchy controls ([setup](waybar/README.md))
 - **matugen** - Wallpaper-derived colors for Waybar only
@@ -93,6 +94,9 @@ machine-specific choices before applying it on another computer. The separate
 as is the machine-local `service.json`. Back up and compare conflicting live files
 before adopting them; do not overwrite them blindly.
 
+The terminal shows thinking and individual tool activity by default, with live
+tool/token counters in the right [activity sidebar](opencode/.config/opencode/plugins/activity-sidebar/README.md).
+
 The current Hyprland and local-model setup also have dedicated Linux packages:
 
 ```bash
@@ -108,6 +112,19 @@ it does **not** download weights or runtime binaries, start the model, or enable
 login autostart. Those artifacts and generated results remain under the real
 `~/.local/share/local-llm/` directory, outside this repository. See its Stow-managed
 `README.md` and `inventory.md` for model operations and the user's preferences.
+
+### OBS Studio
+
+Install the custom OBS theme, launcher, and browser startup workaround:
+
+```bash
+stow --no-folding --target "$HOME" obs
+obs-browser-startup-build
+update-desktop-database "$HOME/.local/share/applications"
+```
+
+See [obs/README.md](obs/README.md) for dependencies, selecting the theme,
+recreating the Twitch chat/stats docks, and the verified OBS/CEF versions.
 
 ### Per-monitor wallpapers
 

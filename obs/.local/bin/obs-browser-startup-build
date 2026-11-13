@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+##############################################################################
+# Paths and Dependencies
+##############################################################################
+
+# Build against the current machine's OBS and Qt installations.
+source_dir="${XDG_DATA_HOME:-$HOME/.local/share}/obs-browser-startup"
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/obs-browser-startup"
+plugin_dir="${XDG_CONFIG_HOME:-$HOME/.config}/obs-studio/plugins/browser-startup-guard/bin/64bit"
+compiler="${CXX:-c++}"
+
+command -v "$compiler" >/dev/null
+pkg-config --print-errors --exists libobs Qt6Widgets
+obs_include="$(pkg-config --variable=includedir libobs)/obs"
+read -r -a qt_flags <<< "$(pkg-config --cflags --libs Qt6Widgets)"
+read -r -a obs_libs <<< "$(pkg-config --libs libobs)"
+
+##############################################################################
+# Build and Install
+##############################################################################
+
+# Keep compiler output outside the Stow-managed source directory.
+mkdir -p "$cache_dir" "$plugin_dir"
+build_dir="$(mktemp -d "$cache_dir/build.XXXXXX")"
+staged=""
+
+cleanup() {
+  rm -f -- "$build_dir/browser-startup-guard.so"
+  rmdir -- "$build_dir"
+  if [[ -n "$staged" ]]; then
+    rm -f -- "$staged"
+  fi
+}
+trap cleanup EXIT
+
+"$compiler" -std=c++17 -fPIC -shared -I "$obs_include" \
+  "$source_dir/browser-startup-guard.cpp" \
+  -o "$build_dir/browser-startup-guard.so" \
+  "${qt_flags[@]}" "${obs_libs[@]}"
+
+# Atomically replace the plugin so an already-running OBS retains its loaded file.
+staged="$(mktemp "$plugin_dir/.browser-startup-guard.XXXXXX")"
+install -m755 "$build_dir/browser-startup-guard.so" "$staged"
+mv -f -- "$staged" "$plugin_dir/browser-startup-guard.so"
+staged=""
+
+printf 'Installed %s\n' "$plugin_dir/browser-startup-guard.so"
+printf 'OBS %s; Qt %s. The plugin loads on the next OBS launch.\n' \
+  "$(pkg-config --modversion libobs)" "$(pkg-config --modversion Qt6Widgets)"

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "aphexlog.cliamp",
+  "name": "Cliamp Player",
+  "version": "1.0.0",
+  "author": "aphexlog",
+  "description": "Cliamp track details and playback controls for the Omarchy and Waybar toolbars.",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "Widget.qml" },
+  "barWidget": {
+    "displayName": "Cliamp",
+    "description": "Click for the mini-player, right-click to play or pause, scroll to skip",
+    "category": "Media",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

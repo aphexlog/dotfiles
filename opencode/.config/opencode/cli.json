@@ -1,8 +1,11 @@
 {
   "$schema": "https://opencode.ai/v2/cli.json",
   "theme": {
-    "name": "tokyonight",
+    "name": "neon-mocha",
     "mode": "dark"
+  },
+  "cursor": {
+    "style": "default"
   },
   "diffs": {
     "wrap": "word"
@@ -10,7 +13,12 @@
   "session": {
     "sidebar": "auto",
     "scrollbar": false,
-    "thinking": "hide"
+    "thinking": "show",
+    "grouping": "none",
+    "verbosity": "high"
   },
-  "animations": true
+  "plugins": [
+    "./plugins/activity-sidebar"
+  ],
+  "animations": false
 }

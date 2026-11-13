@@ -1,0 +1,165 @@
+#!/usr/bin/env python3
+"""A persistent focus clock shared by both desktop bars."""
+
+import fcntl
+import json
+import math
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import time
+
+
+##############################################################################
+# Session Storage and Literal Text
+##############################################################################
+
+STATE = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state")) / "sol-flightdeck"
+
+
+def plain(value, limit=160):
+    # Text stays literal in QML/Waybar; discard control characters and bound length.
+    return " ".join("".join(c for c in str(value) if c.isprintable() or c.isspace()).split())[:limit]
+
+
+##############################################################################
+# Shared Focus Sessions
+##############################################################################
+
+def load_session():
+    try:
+        path = STATE / "session.json"
+        if path.stat().st_size > 4096:
+            return {}
+        data = json.loads(path.read_text())
+        if not isinstance(data, dict) or data.get("minutes") not in (5, 25, 50):
+            return {}
+        start, end = data["start"], data["end"]
+        if not all(isinstance(t, (float, int)) and math.isfinite(t) for t in (start, end)):
+            return {}
+        if abs(end - start - data["minutes"] * 60) > 1:
+            return {}
+        data["label"] = plain(data.get("label", ""), 100)
+        return data
+    except (OSError, ValueError, KeyError, TypeError):
+        return {}
+
+
+def save_session(data):
+    with tempfile.NamedTemporaryFile(mode="w", dir=STATE, delete=False) as handle:
+        temporary = Path(handle.name)
+        json.dump(data, handle)
+    try:
+        os.replace(temporary, STATE / "session.json")
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def timer_state(now=None):
+    data = load_session()
+    if not data:
+        return {"state": "idle", "remaining": 0, "progress": 0, "label": "", "minutes": 25}
+    now = time.time() if now is None else now
+    remaining = max(0, math.ceil(data["end"] - now))
+    return {"state": "running" if remaining else "done", "remaining": remaining,
+            "progress": max(0, min(1, 1 - remaining / (data["minutes"] * 60))),
+            "label": data["label"], "minutes": data["minutes"], "end": data["end"]}
+
+
+def update_timer(request):
+    STATE.mkdir(parents=True, exist_ok=True, mode=0o700)
+    # Two visible bars share one deadline and claim completion only once.
+    with (STATE / "session.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        if request["action"] == "reset":
+            (STATE / "session.json").unlink(missing_ok=True)
+        else:
+            minutes = request.get("minutes", 25)
+            if type(minutes) is not int or minutes not in (5, 25, 50):
+                raise ValueError("Choose 5, 25, or 50 minutes")
+            if timer_state()["state"] == "running":
+                raise ValueError("End the current session before starting another")
+            now = time.time()
+            save_session({"start": now, "end": now + minutes * 60, "minutes": minutes,
+                          "label": plain(request.get("label", ""), 100), "notified": False})
+    return {"ok": True, "timer": timer_state()}
+
+
+def claim_completion():
+    # No state directory or file is created merely by looking at the badge.
+    if not (STATE / "session.json").exists():
+        return False
+    with (STATE / "session.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        data = load_session()
+        if not data or data.get("notified") or data["end"] > time.time():
+            return False
+        data["notified"] = True
+        save_session(data)
+        return True
+
+
+def notify_completion():
+    if claim_completion():
+        # Fixed notification strings: task labels never enter a rich-text sink.
+        subprocess.run(["notify-send", "--app-name=Focus", "--icon=alarm-symbolic",
+                        "Session complete", "Take a breath before the next session."],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=4)
+
+
+##############################################################################
+# Focus Badge and Command Interface
+##############################################################################
+
+def badge(timer):
+    mode, icon, label = "idle", "󰔛", "FOCUS"
+    if timer["state"] == "running":
+        mode, icon = "focus", "󰔛"
+        minutes, seconds = divmod(timer["remaining"], 60)
+        label = f"{minutes:02d}:{seconds:02d}"
+    elif timer["state"] == "done":
+        mode, icon, label = "complete", "󰄬", "DONE"
+    # Waybar's `escape: true` protects all dynamic label/tooltip text.
+    tooltip = "Focus timer"
+    if timer["state"] != "idle" and timer["label"]:
+        tooltip += "\n" + timer["label"]
+    tooltip += "\nClick: focus timer"
+    return {"text": f"{icon} {label}", "class": mode, "tooltip": tooltip}
+
+
+def main():
+    arg = sys.argv[1] if len(sys.argv) > 1 else "status"
+    if arg == "--watch":
+        try:
+            while True:
+                try:
+                    notify_completion()
+                    value = badge(timer_state())
+                except (OSError, ValueError, RuntimeError, subprocess.SubprocessError):
+                    value = {"text": "󰔛 FOCUS", "class": "unavailable", "tooltip": "Focus timer unavailable"}
+                print(json.dumps(value, ensure_ascii=False), flush=True)
+                time.sleep(1)
+        except (BrokenPipeError, KeyboardInterrupt):
+            return 0
+    try:
+        if arg == "status":
+            result = {"ok": True, "timer": timer_state()}
+        else:
+            request = json.loads(arg)
+            if not isinstance(request, dict):
+                raise ValueError("Expected a JSON object")
+            if request.get("action") in ("start", "reset"):
+                result = update_timer(request)
+            else:
+                raise ValueError("Unknown focus-timer action")
+        print(json.dumps(result, ensure_ascii=False))
+        return 0 if result.get("ok") else 1
+    except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
+        print(json.dumps({"ok": False, "error": plain(error, 240)}))
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

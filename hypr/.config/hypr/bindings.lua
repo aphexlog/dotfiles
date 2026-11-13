@@ -116,6 +116,30 @@ o.bind("SUPER + SHIFT + Z", "Redo", function()
 end)
 
 -- ##############################################################################
+-- # Chromium Tabs
+-- ##############################################################################
+
+-- Remap Ctrl+,/. only in Chromium; pass the original shortcuts to other apps.
+local function chromium_tab_shortcut(key)
+  return function()
+    local window = hl.get_active_window()
+    if not window or window.class:lower() ~= "chromium" then
+      return { ok = false }
+    end
+
+    -- Separate press/release to avoid stuck synthetic keys.
+    hl.dispatch(hl.dsp.send_key_state({ mods = "CTRL", key = key, state = "down" }))
+    hl.timer(function()
+      hl.dispatch(hl.dsp.send_key_state({ mods = "CTRL", key = key, state = "up" }))
+    end, { timeout = 50, type = "oneshot" })
+    return { ok = true }
+  end
+end
+
+o.bind("CTRL + comma", "Previous Chromium tab", chromium_tab_shortcut("Page_Up"), { auto_consuming = true })
+o.bind("CTRL + period", "Next Chromium tab", chromium_tab_shortcut("Page_Down"), { auto_consuming = true })
+
+-- ##############################################################################
 -- # Window Dragging
 -- ##############################################################################
 

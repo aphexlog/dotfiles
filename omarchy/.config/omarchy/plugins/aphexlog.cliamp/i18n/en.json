@@ -1,0 +1,16 @@
+{
+  "player.ready": "Ready to play",
+  "player.empty": "Open Cliamp to choose music, radio, or a playlist.",
+  "player.open": "Open Cliamp",
+  "player.close": "Close player",
+  "player.previous": "Previous track",
+  "player.next": "Next track",
+  "player.play": "Play",
+  "player.pause": "Pause",
+  "player.volume": "Mute / unmute Cliamp",
+  "player.playing": "Playing",
+  "player.paused": "Paused",
+  "player.stopped": "Stopped",
+  "player.idle": "Cliamp is closed",
+  "player.controls": "Click: player · Right-click: play/pause · Scroll: skip · Middle-click: open Cliamp"
+}

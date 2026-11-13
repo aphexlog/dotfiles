@@ -1,44 +1,44 @@
 -- Change the default Omarchy look'n'feel.
 
 -- ##############################################################################
--- # Futuristic Window Styling
+-- # PHX Midnight Circuit Window Styling
 -- ##############################################################################
 
--- Neon focus borders and generous spacing keep tiled windows distinct.
+-- Crisp cyan-to-magenta edges tie windows into the paired desktop bars.
 hl.config({
   general = {
     gaps_in = 6,
     gaps_out = 12,
     border_size = 2,
     col = {
-      active_border = { colors = { "rgba(55ddffff)", "rgba(a78bffff)" }, angle = 45 },
-      inactive_border = "rgba(454b6688)",
+      active_border = { colors = { "rgba(00e5ffdd)", "rgba(f072ffdd)" }, angle = 35 },
+      inactive_border = "rgba(254253aa)",
     },
 
     -- Require a Super-modified drag rather than resizing on ordinary taps.
     resize_on_border = false,
   },
-  -- Round the silhouette and add depth without reducing text opacity.
+  -- Tighter corners, ink-dark shadows, and a quieter inactive treatment.
   decoration = {
-    rounding = 16,
+    rounding = 8,
     shadow = {
       enabled = true,
-      range = 24,
+      range = 20,
       render_power = 3,
-      color = "rgba(080b20aa)",
+      color = "rgba(030810bb)",
     },
     blur = {
       enabled = true,
-      size = 6,
+      size = 4,
       passes = 2,
     },
     dim_inactive = true,
-    dim_strength = 0.08,
+    dim_strength = 0.04,
   },
 })
 
 -- Keep opening animations smooth and restrained.
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 4, bezier = "easeOutQuint", style = "popin 94%" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 5.5, bezier = "easeOutQuint", style = "popin 98%" })
 
 -- https://wiki.hypr.land/Configuring/Basics/Variables/#general
 -- hl.config({

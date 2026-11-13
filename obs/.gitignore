@@ -1,0 +1,10 @@
+##############################################################################
+# Machine-local OBS State and Build Artifacts
+##############################################################################
+
+# Only the custom theme belongs in the tracked OBS configuration directory.
+/.config/obs-studio/*
+!/.config/obs-studio/themes/
+
+# Compile the startup guard for the installed OBS and Qt libraries.
+/.local/share/obs-browser-startup/*.so
