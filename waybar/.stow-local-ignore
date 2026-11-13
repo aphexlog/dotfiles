@@ -1,0 +1,6 @@
+# Package documentation and validation stay in the repository.
+(^|/)\.stow-local-ignore$
+^/(README\.md|LICENSE)$
+^/tests(/|$)
+(^|/)__pycache__(/|$)
+\.bak(\..*)?$

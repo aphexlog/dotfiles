@@ -1,0 +1,83 @@
+# ------------------------------------------------------------------------------
+# PHX Midnight Circuit — Typography and Controls
+# ------------------------------------------------------------------------------
+
+[font]
+base-size = 10
+heading = 14
+title = 12
+caption = 10
+
+# Shared interaction colors give every shell panel the same visual vocabulary.
+[controls]
+normal-color = "foreground"
+normal-border = "#294253"
+normal-border-alpha = 1.0
+normal-border-width = 1
+normal-fill-alpha = 0.025
+hover-cursor-color = "accent"
+hover-cursor-border = "#00e5ff"
+hover-cursor-border-alpha = 0.55
+hover-cursor-fill-alpha = 0.08
+focus-color = "accent"
+focus-border = "#00e5ff"
+focus-border-alpha = 0.8
+focus-fill-alpha = 0.10
+selected-color = "accent"
+selected-border = "#00e5ff"
+selected-border-width = 1
+selected-border-alpha = 0.55
+selected-fill-alpha = 0.12
+pressed-color = "accent"
+pressed-fill-alpha = 0.18
+selection-color = "accent"
+selection-fill-alpha = 0.25
+
+# ------------------------------------------------------------------------------
+# Popup, Notification, and Launcher Surfaces
+# ------------------------------------------------------------------------------
+
+[popups]
+background = "#080f1b"
+text = "#d8f7ff"
+border = "#254253"
+border-width = 1
+
+[tooltip]
+background = "#080f1b"
+background-alpha = 1.0
+text = "#d8f7ff"
+border = "#3b6172"
+border-width = 1
+
+[notifications]
+background = "#080f1b"
+text = "#d8f7ff"
+border = "#3b8795 #915798 35deg"
+border-width = 1
+countdown = "#00e5ff"
+
+[menu]
+background = "#080f1b"
+text = "#d8f7ff"
+border = "#254253"
+border-width = 1
+selected-background = "#00e5ff"
+selected-background-alpha = 0.10
+selected-text = "#93f4ff"
+selected-border = "#00e5ff"
+selected-border-alpha = 0.5
+
+[launcher]
+background = "#080f1b"
+background-alpha = 0.98
+text = "#d8f7ff"
+border = "#3b8795 #915798 35deg"
+border-width = 1
+scrim = "#030810"
+scrim-alpha = 0.35
+selected-background = "#00e5ff"
+selected-background-alpha = 0.10
+selected-text = "#93f4ff"
+selected-border = "#00e5ff"
+selected-border-alpha = 0.5

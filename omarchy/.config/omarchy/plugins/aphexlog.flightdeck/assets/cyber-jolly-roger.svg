@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
+  <title>Cyberpunk pirate</title>
+  <!-- Crossed cutlasses: curved blades, short guards, and wrapped grips. -->
+  <g stroke-linejoin="round">
+    <path fill="#00e5ff" d="M58 194L184 68C201 51 211 38 218 24C221 51 211 76 194 93L74 210Z"/>
+    <path fill="#d8f7ff" d="M68 199L190 77C202 65 209 52 214 40C212 61 202 77 190 89L73 206Z"/>
+    <path stroke="#00e5ff" stroke-width="10" d="M57 211L37 231"/>
+    <path stroke="#080f1b" stroke-width="3" d="M43 218L49 224M49 212L55 218"/>
+    <path fill="#00e5ff" d="M36 192L42 186L82 226L76 232Z"/>
+    <path fill="#d8f7ff" d="M29 228L34 223L45 234L40 239Z"/>
+    <g transform="translate(256 0) scale(-1 1)">
+      <path fill="#f072ff" d="M58 194L184 68C201 51 211 38 218 24C221 51 211 76 194 93L74 210Z"/>
+      <path fill="#efc5f5" d="M68 199L190 77C202 65 209 52 214 40C212 61 202 77 190 89L73 206Z"/>
+      <path stroke="#f072ff" stroke-width="10" d="M57 211L37 231"/>
+      <path stroke="#080f1b" stroke-width="3" d="M43 218L49 224M49 212L55 218"/>
+      <path fill="#f072ff" d="M36 192L42 186L82 226L76 232Z"/>
+      <path fill="#efc5f5" d="M29 228L34 223L45 234L40 239Z"/>
+    </g>
+  </g>
+  <!-- A bone-white skull with an angular cybernetic temple and jaw. -->
+  <path fill="#d8f7ff" stroke="#080f1b" stroke-width="9" stroke-linejoin="round"
+    d="M99 40L157 40L182 62L190 106L177 130L167 136L167 156L150 179L106 179L89 156L89 136L79 130L66 106L74 62Z"/>
+  <path fill="#93f4ff" d="M155 44L178 65L186 106L174 126L163 132L153 120L163 109L162 78L144 61Z"/>
+  <path stroke="#254253" stroke-width="3" d="M94 57L104 68H118M174 69L178 86M159 139V153L146 169"/>
+  <!-- The diagonal strap and neon-rimmed patch read as pirate at small sizes. -->
+  <path stroke="#080f1b" stroke-width="8" d="M72 77L185 104"/>
+  <path fill="#080f1b" d="M88 91L115 88L121 102L111 117L94 115L86 105Z"/>
+  <path fill="#00e5ff" d="M94 100L110 97L114 102L107 107L96 105Z"/>
+  <path fill="#080f1b" stroke="#f072ff" stroke-width="4" stroke-linejoin="round"
+    d="M137 88L166 92L168 107L156 119L140 112Z"/>
+  <!-- Open nasal cavity and spaced teeth retain a recognisable skull silhouette. -->
+  <path fill="#080f1b" d="M128 114L117 133L125 132L128 128L131 132L139 133Z"/>
+  <path fill="#080f1b" d="M103 145L153 145L148 163L108 163Z"/>
+  <path stroke="#d8f7ff" stroke-width="5" d="M116 145V163M128 145V164M140 145V163"/>
+  <path stroke="#00e5ff" stroke-width="3" d="M89 122L99 130V138"/>
+  <path fill="#00e5ff" d="M96 136H102V142H96Z"/>
+</svg>

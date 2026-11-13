@@ -1,0 +1,19 @@
+{
+  "close": "Close focus timer",
+  "taskPlaceholder": "Task (optional)",
+  "complete": "Complete",
+  "mode.25": "Focus",
+  "mode.50": "Deep focus",
+  "mode.5": "Break",
+  "preset.25": "25m",
+  "preset.50": "50m",
+  "preset.5": "5m",
+  "presetHint.25": "25-minute focus",
+  "presetHint.50": "50-minute deep focus",
+  "presetHint.5": "5-minute break",
+  "start": "Start timer",
+  "end": "End session",
+  "clear": "Clear completed session",
+  "readError": "The focus timer is temporarily unavailable.",
+  "actionError": "That action did not complete. Try again."
+}

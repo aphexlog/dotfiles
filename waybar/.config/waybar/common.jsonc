@@ -3,14 +3,14 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 42,
+  "height": 46,
   "spacing": 6,
   "margin-top": 4,
   "margin-left": 4,
   "margin-right": 4,
   "fixed-center": true,
   "reload_style_on_change": true,
-  "modules-left": ["group/distro-group", "group/storage", "group/system", "group/music"],
+  "modules-left": ["group/distro-group", "custom/flightdeck", "group/storage", "group/system", "group/music"],
   "modules-center": ["custom/power", "custom/desktop", "group/workspaces", "custom/idle", "custom/nightlight"],
   "modules-right": ["custom/input-wave", "custom/agent-usage", "group/audio", "group/connections", "clock", "group/tray-group"],
 
@@ -54,6 +54,15 @@
   // ============================================================================
   // Omarchy Launchers and Controls
   // ============================================================================
+  // A dedicated focus timer, with one countdown shared across both bars.
+  "custom/flightdeck": {
+    "exec": "python3 $HOME/.local/bin/cyber-flightdeck --watch",
+    "return-type": "json",
+    "restart-interval": 3,
+    "exec-on-event": false,
+    "escape": true,
+    "on-click": "$HOME/.local/bin/cyber-bar-popup athena-panels toggle aphexlog.flightdeck"
+  },
   // One-click desktop controls, with the same backend exposed to OpenCode.
   "custom/desktop": {
     "format": "󰒓",

@@ -15,7 +15,7 @@ PopupWindow {
   property int padding: Style.spacing.popupPadding
   property int contentWidth: Style.space(280)
   property int contentHeight: Style.space(200)
-  property color borderColor: "#426b83"
+  property color borderColor: "#254253"
   property var borderSpec: Border.flat(borderColor, 1)
   property var toolbar: ({active: false})
   property bool open: false
@@ -167,11 +167,11 @@ PopupWindow {
     color: Context.background
     borderSpec: root.borderSpec
     padding: root.padding
-    radius: 8
+    radius: 6
     opacity: root.open ? 1.0 : 0
 
     Behavior on opacity {
-      NumberAnimation { duration: 140; easing.type: Easing.OutCubic }
+      NumberAnimation { duration: Style.duration(140); easing.type: Easing.OutCubic }
     }
 
     Item {

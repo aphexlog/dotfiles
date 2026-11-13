@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "aphexlog.flightdeck",
+  "name": "Focus",
+  "version": "1.2.1",
+  "author": "aphexlog",
+  "description": "A minimal focus timer with a neon cyberpunk pirate emblem",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "Deck.qml" },
+  "barWidget": {
+    "displayName": "Focus",
+    "description": "Focus sessions shared across both desktop bars",
+    "category": "System",
+    "allowMultiple": false
+  }
+}

@@ -10,7 +10,7 @@ QtObject {
   property string edge: "top"
   property double timestamp: 0
   property var activeOwner: null
-  readonly property color background: "#090f20"
+  readonly property color background: "#080f1b"
   readonly property color foreground: "#d8f7ff"
   readonly property color cyan: "#00e5ff"
   readonly property color magenta: "#f072ff"

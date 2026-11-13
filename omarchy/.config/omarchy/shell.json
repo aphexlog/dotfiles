@@ -42,6 +42,9 @@
       ],
       "right": [
         {
+          "id": "aphexlog.flightdeck"
+        },
+        {
           "id": "aphexlog.hud"
         },
         {

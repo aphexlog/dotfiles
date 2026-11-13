@@ -1,6 +1,6 @@
-# Athena-inspired Waybar for Omarchy
+# Midnight Circuit for Omarchy
 
-Rounded floating capsules, Pac-Man/ghost workspaces with application icons, and
+Three floating instrument strips, paired cyan/magenta workspaces, and
 hover drawers, adapted from [Athena](https://github.com/haikal-hakim/athena).
 The original design is MIT-licensed; attribution is retained in `LICENSE`.
 
@@ -39,7 +39,8 @@ Validate Hyprland edits with `hyprctl reload` and `hyprctl configerrors`.
 
 ## Controls
 
-- Arch icon: Omarchy menu; hover to reveal app shortcuts.
+- **Arch icon**: Omarchy menu; hover to reveal app shortcuts.
+- **FOCUS**: open the dedicated focus timer, described below.
 - Workspaces: click to switch; left monitor uses 1–5, right uses 6–9 and 0.
 - Gear / `Super+Ctrl+D`: desktop controls for window selection, moving, resizing,
   floating/tiling, display scaling and quick settings.
@@ -64,6 +65,56 @@ The workstation has no battery, so no battery percentage is fabricated. The
 temperature module uses its existing ACPI thermal zone. Monitor DP-7 receives a
 slightly smaller font for the portrait display; adjust this selector for another
 monitor arrangement.
+
+### Focus
+
+The **FOCUS** badge opens a compact, icon-led timer with a cyan-and-magenta
+cyberpunk Jolly Roger: an angular skull, neon eyepatch, and crossed cutlasses.
+The card uses a large countdown, a single progress line,
+and short duration presets, with no text branding or slogans.
+Flight Deck has been reduced to this dedicated focus tool; desktop maps,
+app classification, and launch shortcuts were removed.
+
+- Enter an optional task and choose a 25-, 50-, or 5-minute
+  session. The **play** button starts it; **stop** ends it. Both bars show the
+  same countdown. Enter in the task field also starts the selected timer.
+- Completion produces one desktop notification and a green **DONE** badge.
+  The **reset** arrow clears the completed session. Icon controls have tooltips
+  and accessible names; the task field is optional.
+  The deadline survives panel closure and bar/shell restarts. Notifications are
+  delivered while Waybar is running (or on its next start after the deadline).
+
+The backend, `~/.local/bin/cyber-flightdeck`, reads only its local session file;
+it no longer queries desktop windows. Each badge updates once per second.
+Session state is machine-local at
+`${XDG_STATE_HOME:-~/.local/state}/sol-flightdeck/session.json`. Existing session
+deadlines remain compatible. Notification, audio, and idle settings are independent.
+
+The UI is in `omarchy/.config/omarchy/plugins/aphexlog.flightdeck/`; it requires
+the existing `aphexlog.bar`/`aphexlog.hud` popup integration and a
+`{"id": "aphexlog.flightdeck"}` entry in `bar.layout.right` in `shell.json`.
+The internal plugin ID and backend filename retain their original names for
+compatibility. Its English strings use Omarchy's translation fallback. Escape and outside-click
+dismissal work on both outputs.
+
+```bash
+python3 -B -m unittest discover -s waybar/tests -v
+```
+
+### Midnight Circuit appearance
+
+The visual treatment spans the existing desktop surfaces:
+
+- Three continuous navy bar strips, fine dividers, and restrained hover fills.
+- Cyan active workspaces on the left and magenta active workspaces on the right.
+- Icon-only menu branding and consistent, high-contrast status typography.
+- Fine asymmetric popup brackets and short cyan/magenta edge accents from
+  `aphexlog.hud/Frame.qml`.
+- Eight-pixel window corners, matching focus borders, ink-dark shadows, and
+  a short 98% opening motion in `hypr/.config/hypr/looknfeel.lua`.
+- Shell control, tooltip, notification, menu, and launcher colors in
+  `omarchy/.config/omarchy/shell.toml`. These user overrides persist across
+  theme switches; they are separate from application color schemes.
 
 ### Desktop controls through chat
 

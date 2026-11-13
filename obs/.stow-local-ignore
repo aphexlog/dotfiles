@@ -1,0 +1,8 @@
+# Keep package metadata and generated binaries out of the live links.
+(^|/)\.gitignore$
+(^|/)\.stow-local-ignore$
+^/README\.md$
+\.so$
+
+# Keep OBS runtime configuration outside the managed theme directory.
+^/\.config/obs-studio/(?!themes(/|$))
